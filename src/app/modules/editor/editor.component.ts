@@ -1,5 +1,6 @@
+import { BlogService } from 'src/app/shared/services/blog.service';
 import { ConnectApiService } from './../../shared/services/connect-api.service';
-import { NgForm, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -36,7 +37,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
     private route: ActivatedRoute,
     private api: ConnectApiService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private blogService: BlogService
   ) {}
 
   //#end region
@@ -118,11 +120,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
         (err) => {
           console.log(err);
           this.isLoading = false;
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!'
-          })
+          this.blogService.errorSwal('Oops...', 'Something went wrong!');
         }
       );
 
@@ -141,14 +139,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
 
   public canDeativate(): boolean | Promise<boolean> {
     if(this.submitForm.dirty && !this.submitted) {
-      return Swal.fire({
-        icon: 'question',
-        title: 'Wait!?',
-        text: 'Are you sure to leave!?',
-        iconColor: '#0f0e15',
-        confirmButtonColor: '#0f0e15',
-        showCancelButton: true,
-      }).then((result) => {
+      return this.blogService.questionSwal('Are you sure to leave!?')
+      .then((result) => {
         if (result.isConfirmed) {
           return true;
         } else {
@@ -163,14 +155,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
     this.submitted = true;
     if (this.isEdit) {
       console.log(form.value);
-      Swal.fire({
-        icon: 'question',
-        iconColor: '#0f0e15',
-        confirmButtonColor: '#0f0e15',
-        showCancelButton: true,
-        cancelButtonColor: '#0f0e15',
-        title: 'Are you sure?!',
-      }).then((result) => {
+      this.blogService.questionSwal('Are you sure!?')
+      .then((result) => {
         if (result.isConfirmed) {
           this.isLoading = true;
           const editArticleSub = this.api.onUpdateArticle({
@@ -179,31 +165,13 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
           },
           this.slug)
             .subscribe((res) => {
-              console.log(res);
-              
               this.isLoading = false;
-              Swal.fire({
-                icon: 'success',
-                iconColor: '#0f0e15',
-                confirmButtonColor: '#0f0e15',
-                title: 'Conglaturation!',
-                text: 'Succesful update article!',
-                showConfirmButton: false,
-                timer: 1500
-              });
+              this.blogService.succesSwal('Conglaturation!', 'Succesful update article!');
               this.router.navigate([`../article/`, res.article.slug]);
             }, (err) => {
               console.log(err);
               this.isLoading = false;
-              Swal.fire({
-                icon: 'error',
-                iconColor: '#d33',
-                confirmButtonColor: '#0f0e15',
-                title: 'Oops...',
-                text: 'Title ' + err.error.errors.title,
-                showConfirmButton: false,
-                timer: 1500
-              })
+              this.blogService.errorSwal('Oops...', `Title ${err.error.errors.title}`);
             })
   
           this.subscriptions.add(editArticleSub);
@@ -221,29 +189,13 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
       .subscribe(
         (res) => {
           this.isLoading = false;
-          Swal.fire({
-            icon: 'success',
-            iconColor: '#0f0e15',
-            confirmButtonColor: '#0f0e15',
-            title: 'Conglaturation!',
-            text: 'Succesful add new article!',
-            showConfirmButton: false,
-            timer: 1500
-          });
+          this.blogService.succesSwal('Conglaturation!', 'Succesful add new article!');
           this.router.navigate([`../article/`, res.article.slug]);
         },
         (err) => {
           this.isLoading = false;
           console.log(err);
-          Swal.fire({
-            icon: 'error',
-            iconColor: '#d33',
-            confirmButtonColor: '#0f0e15',
-            title: 'Oops...',
-            text: 'Title ' + err.error.errors.title,
-            showConfirmButton: false,
-            timer: 1500
-          })
+          this.blogService.errorSwal('Oops...', `Title ${err.error.errors.title}`);
         }
       );
 

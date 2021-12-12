@@ -1,3 +1,4 @@
+import { BlogService } from 'src/app/shared/services/blog.service';
 import { NgForm } from '@angular/forms';
 import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region Constructor
   public constructor(
     private authService: AuthService,
-    private roter: Router
+    private router: Router,
+    private blogService: BlogService
     ) { }
 
   //#end region
@@ -42,28 +44,13 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     const loginSub = this.authService.login(form.value)
       .subscribe(() => {
         this.isLoading = false;
-        Swal.fire({
-          icon: 'success',
-          iconColor: '#0f0e15',
-          confirmButtonColor: '#0f0e15',
-          title: 'Succesful login!',
-          text: 'Welcome back!',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.roter.navigate(['../home']);
+        this.blogService.succesSwal('Succesful login!', 'Welcome back!');
+        this.blogService.setIsLogin(true);
+        this.router.navigate(['../home']);
       }, (err) => {
         this.isLoading = false;
         console.log(err);
-        Swal.fire({
-          icon: 'error',
-          iconColor: '#d33',
-          confirmButtonColor: '#0f0e15',
-          title: 'Oops...',
-          text: 'Email or password is invalid!',
-          showConfirmButton: false,
-          timer: 1500
-        })
+        this.blogService.errorSwal('Oops...', 'Email or password is invalid!');
       })
 
     this.subscriptions.add(loginSub);
