@@ -29,8 +29,8 @@ export class ProfileArticleComponent implements OnInit {
   ngOnInit(): void {
     this.isLoadingArticle = true;
 
-    const subscription = this.profileService.currentArticles.pipe(switchMap(articles =>
-      this.connectedService.onGetMultiArticlesByAuthor(this.limit ,this.offset,articles)
+    this.profileService.currentArticles.pipe(switchMap(articles =>
+      this.connectedService.onGetMultiArticlesByAuthor(this.limit ,this.offset, articles)
     ))
     .subscribe((data : any) => {
       this.listArticle = data.articles;
@@ -38,7 +38,7 @@ export class ProfileArticleComponent implements OnInit {
 
       this.length = data.articlesCount;
       this.isLoadingArticle = false;
-      subscription.unsubscribe();
+
     }, error => {
       console.log(error);
       this.isLoadingArticle = false;
