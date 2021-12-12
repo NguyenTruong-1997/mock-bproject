@@ -1,0 +1,45 @@
+.signup {
+  background-color: #0f0e15;
+  height: 70vh;
+  @media screen and (max-width: 768px) {
+    height: auto;
+  }
+  .signup-form {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 550px;
+    margin: 20px auto 5vw;
+    .signup__title {
+      img {
+        background-color: #fff;
+        border-radius: 50%;
+        margin: 50px;
+      }
+    }
+    p {
+      margin-bottom: 30px;
+      font-size: 18px;
+      color: #aaa;
+      a {
+        color: #fff;
+        text-decoration: underline;
+      }
+    }
+    input {
+      color: #fff;
+    }
+  }
+  .spinner {
+    margin: auto;
+    padding-top: 80px;
+    @media screen and (max-width: 768px) {
+      height: 80vh;
+    }
+  }
+}
+
+::ng-deep .mat-form-field-label-wrapper {
+  font-size: 17px;
+}

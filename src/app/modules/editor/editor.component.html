@@ -1,0 +1,85 @@
+<div class="article-editor">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div *ngIf="isLoading" class="text-center spinner position-absolute">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+
+        <form
+          autocomplete="off"
+          class="article-form"
+          novalidate
+          [formGroup]="submitForm"
+          (submit)="submitForm.valid && onSubmit(submitForm)"
+        >
+
+          <div class="article-editor__logo text-center">
+            <img src="https://img.icons8.com/ios/100/000000/circled-w.png"/>
+          </div>
+
+          <h2 class="article__title text-center">What do you think, let share it for everyone!</h2>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Article Title</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Title"
+              formControlName="title"
+              #inpFocus
+            />
+            <mat-error *ngIf="handle.title.errors?.required">
+              Article title is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>What's this article about?</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Description"
+              formControlName="description"
+            />
+            <mat-error *ngIf="handle.description.errors?.required">
+              Description is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Tags something!?</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Tags"
+              formControlName="tagList"
+            />
+            <mat-error *ngIf="handle.tagList.errors?.required">
+              Tag is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>What do you want to share!?</mat-label>
+            <textarea
+              matInput
+              placeholder="What do you think!?"
+              formControlName="body"
+              rows="5"
+            ></textarea>
+            <mat-error *ngIf="handle.body.errors?.required">
+              This field is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="mb-3 text-end">
+            <button mat-raised-button color="primary" type="submit" [disabled]="submitForm.invalid">
+              {{ isEdit ? 'Update' : 'Post' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

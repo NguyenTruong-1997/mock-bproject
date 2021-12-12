@@ -1,0 +1,104 @@
+<div class="signup">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+
+        <div *ngIf="isLoading" class="text-center spinner">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+        
+        <form
+          *ngIf="!isLoading"
+          class="signup-form"
+          autocomplete="off"
+          novalidate
+          #signupForm="ngForm"
+          (submit)="signupForm.form.valid && onSignup(signupForm)"
+        >
+          <div class="signup__title text-center">
+            <img src="https://img.icons8.com/ios/100/000000/circled-w.png"/>
+          </div>
+          
+          <p class="signup__desc text-center">
+            Unlock full access and see the entire library of members-only
+            content &amp; updates.
+          </p>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Username</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Username"
+              ngModel
+              name="username"
+              #username="ngModel"
+              #inpFocus
+              required
+            />
+            <mat-error *ngIf="username.hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              matInput
+              placeholder="Email"
+              ngModel
+              name="email"
+              #email="ngModel"
+              required
+              email
+            />
+            <mat-error
+              *ngIf="email.hasError('email') && !email.hasError('required')"
+            >
+              Please enter a valid email
+            </mat-error>
+            <mat-error *ngIf="email.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Password</mat-label>
+            <input
+              type="password"
+              matInput
+              placeholder="Password"
+              ngModel
+              name="password"
+              #password="ngModel"
+              required
+            />
+            <mat-error
+              *ngIf="
+                password.hasError('email') && !password.hasError('required')
+              "
+            >
+              Please enter a valid password
+            </mat-error>
+            <mat-error *ngIf="password.hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="mb-3">
+            <button mat-raised-button color="primary" type="submit">
+              Signup
+            </button>
+          </div>
+          <p class="signup__bottom-text">
+            <small
+              >Already have an account?
+              <a [routerLink]="['../login']">Login</a></small
+            >
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

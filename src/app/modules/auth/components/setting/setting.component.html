@@ -1,0 +1,124 @@
+<div class="setting">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div *ngIf="isLoading" class="text-center spinner position-absolute">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+
+        <form
+          autocomplete="off"
+          class="setting-form"
+          novalidate
+          [formGroup]="settingForm"
+          (submit)="settingForm.valid && onSetting(settingForm)"
+        >
+          <div class="setting__title text-center">
+            <img src="https://img.icons8.com/ios/100/000000/circled-w.png" />
+          </div>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Username</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Username"
+              formControlName="username"
+              #inpFocus
+            />
+            <mat-error *ngIf="handle.username.errors?.required">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              matInput
+              placeholder="Email"
+              formControlName="email"
+            />
+            <mat-error
+              *ngIf="handle.username.errors?.email && !handle.username.errors?.required"
+            >
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="handle.username.errors?.required">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div
+            class="
+              image-preview
+              d-flex
+              justify-content-between
+              align-items-center
+            "
+          >
+            <mat-form-field appearance="outline" class="w-75">
+              <mat-label>Image URL</mat-label>
+              <input
+                type="url"
+                matInput
+                placeholder="Image URL"
+                formControlName="image"
+                #image
+              />
+              <mat-error
+                *ngIf="handle.image.errors?.pattern && !handle.image.errors?.required"
+              >
+                Please enter a valid URL
+              </mat-error>
+              <mat-error *ngIf="handle.image.errors?.required">
+                Image profile is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <div class="image-preview mb-3">
+              <img
+                [src]="
+                  settingForm.value.image && !handle.image.errors?.pattern
+                    ? settingForm.value.image
+                    : 'https://api.realworld.io/images/smiley-cyrus.jpeg'
+                "
+                class="d-block mx-auto"
+              />
+            </div>
+          </div>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Short bio</mat-label>
+            <textarea
+              matInput
+              placeholder="Short bio about you"
+              formControlName="bio"
+              rows="5"
+            ></textarea>
+          </mat-form-field>
+
+          <div class="mb-3 d-flex justify-content-between">
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="onLogout()"
+            >
+              Logout
+            </button>
+
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="settingForm.invalid"
+            >
+              Update settings
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
