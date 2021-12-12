@@ -1,7 +1,7 @@
 <div class="bg-black1 mx-auto" style="width: 100%; height: auto">
   <div class="row">
     <div class="col-12">
-      <div *ngIf="isLoading" class="text-center spinner">
+      <div *ngIf="isLoading" class="text-center spinner mb-5">
         <app-loading-spinner></app-loading-spinner>
       </div>
     </div>
@@ -36,7 +36,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="clearfix"></div> -->
         <div class="float-end">
           <div class="post-bottom">
             <span
@@ -45,30 +44,38 @@
             >
               <a
                 ><span
+                  appDebounceClick
+                  [debounceTime]="300"
                   class="text-gray"
                   *ngIf="!article?.author?.following"
-                  (click)="followArticle()"
+                  (debounceClick)="followArticle()"
                   ><i class="fas fa-plus"></i> Follow
                   {{ article?.author?.username }}</span
                 ><span
+                  appDebounceClick
+                  [debounceTime]="300"
                   class="text-gray"
                   *ngIf="article?.author?.following"
-                  (click)="unfollowArticle()"
+                  (debounceClick)="unfollowArticle()"
                   ><i class="fas fa-plus"></i> Unfollow
                   {{ article?.author?.username }}
                 </span></a
               >
               <a
                 ><span
+                  appDebounceClick
+                  [debounceTime]="300"
                   class="text-gray"
                   *ngIf="!article?.favorited"
-                  (click)="favoriteArticle()"
+                  (debounceClick)="favoriteArticle()"
                   ><i class="far fa-heart"></i> Favorite Article
                   {{ article?.favoritesCount }}</span
                 ><span
+                  appDebounceClick
+                  [debounceTime]="300"
                   class="text-gray"
                   *ngIf="article?.favorited"
-                  (click)="unFavoriteArticle()"
+                  (debounceClick)="unFavoriteArticle()"
                   ><i class="fas fa-heart"></i> Unfavorite Article
                   {{ article?.favoritesCount }}</span
                 ></a
@@ -103,7 +110,7 @@
       </div>
     </div>
 
-    <div class="container mt-4" style="padding-bottom: 25px">
+    <div class="container mt-4" style="padding-bottom: 85px">
       <form
         #comment="ngForm"
         class="example-form mx-auto"
@@ -120,6 +127,11 @@
               style="color: #fff"
               #input
             ></textarea>
+            <img
+                    src="{{ currentUser?.user?.image }}"
+                    alt="img-author"
+                    class="comment-author-img"
+                  />
             <div class="toolbar mt-2">
               <button
                 (click)="input.value = ''"

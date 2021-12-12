@@ -6,16 +6,18 @@ import { MatInputModule } from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
+import { DebounceClickDirectives } from './directives/debounces.directive';
+
 
 @NgModule({
-  declarations: [ArticleComponent],
+  declarations: [ArticleComponent,DebounceClickDirectives],
   imports: [
     CommonModule,
     RouterModule.forChild([{ path: ':slug', component: ArticleComponent }]),
     MatInputModule,
     FormsModule,
     LoadingSpinnerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ],
 })
 export class ArticleModule {}

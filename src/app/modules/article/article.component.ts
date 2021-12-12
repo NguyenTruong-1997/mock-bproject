@@ -115,6 +115,8 @@ export class ArticleComponent implements OnInit {
       (data: any) => {
         this.articleComment.splice(index, 1);
         Swal.fire({
+          position: 'top-end',
+          width: '20rem',
           icon: 'success',
           iconColor: '#0f0e15',
           confirmButtonColor: '#0f0e15',
@@ -140,6 +142,8 @@ export class ArticleComponent implements OnInit {
           (data: any) => {
             this.article = data.article;
             Swal.fire({
+              position: 'top-end',
+              width: '20rem',
               icon: 'success',
               iconColor: '#0f0e15',
               title: 'Succesfully',
@@ -172,6 +176,8 @@ export class ArticleComponent implements OnInit {
         (data: any) => {
           this.article = data.article;
           Swal.fire({
+            position: 'top-end',
+            width: '20rem',
             icon: 'success',
             iconColor: '#0f0e15',
             title: 'Succesfully',
@@ -206,6 +212,8 @@ export class ArticleComponent implements OnInit {
           (follow: { profile: Profile }) => {
             this.article.author = follow.profile!;
             Swal.fire({
+              position: 'top-end',
+              width: '20rem',
               icon: 'success',
               iconColor: '#0f0e15',
               title: 'Succesfully',
@@ -238,6 +246,8 @@ export class ArticleComponent implements OnInit {
         (follow: { profile: Profile }) => {
           this.article.author = follow.profile!;
           Swal.fire({
+            position: 'top-end',
+            width: '20rem',
             icon: 'success',
             iconColor: '#0f0e15',
             title: 'Succesfully',
