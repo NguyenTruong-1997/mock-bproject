@@ -8,6 +8,7 @@ import {
 import { GetProfile } from './../models/profile.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -125,6 +126,27 @@ export class ConnectApiService {
 
   public onGetTags() {
     return this.http.get<Tags>(this.API_URL + '/tags');
+  }
+
+  public handerError(err: any, isLoading?:boolean) {
+    if (err.error instanceof Error) {
+      console.log(`'An error occurred:', ${err.error.message}`);
+    } else {
+      console.log(
+        `Backend returned code ${err.status}, body was: ${err.error}`
+      );
+    }
+    if(isLoading){
+      isLoading = false;
+    }
+    Swal.fire({
+      icon: 'error',
+      iconColor: '#d33',
+      confirmButtonColor: '#0f0e15',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+      timer: 1500,
+    });
   }
 
   //#end region
