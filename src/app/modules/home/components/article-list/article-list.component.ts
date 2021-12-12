@@ -72,7 +72,8 @@ export class ArticleListComponent implements OnInit {
         this.results = res!.articles;
         this.length = res.articlesCount;
       },  (err) => {
-        this.connectApiService.handerError(err,this.loading)
+        this.loading = false;
+        this.blogService.handerError(err)
       })
   }
 
@@ -86,14 +87,7 @@ export class ArticleListComponent implements OnInit {
             this.results[i].favorited = res.article.favorited;
           });
         console.log('del');
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: `UnFavorited!`,
-          showConfirmButton: false,
-          width: '20rem',
-          timer: 1500
-        })
+        this.blogService.succesSwal("Success","UnFavorited!")
       } else {
         this.connectApiService
           .onFavoriteArticle(article.slug)
@@ -102,26 +96,11 @@ export class ArticleListComponent implements OnInit {
             this.results[i].favorited = res.article.favorited;
           });
         console.log('post');
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: `Favorited!`,
-          showConfirmButton: false,
-          width: '20rem',
-          timer: 1500
-        })
+        this.blogService.succesSwal("Success","Favorited!")
       }
     }
     else {
-      Swal.fire({
-        title: 'You need to login to perform this task ?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#0f0e15',
-        cancelButtonColor: '#ff7b7b',
-        iconColor: '#0f0e15',
-        confirmButtonText: 'Login'
-      }).then((result) => {
+     this.blogService.questionSwal("Ban can dang nhap").then((result) => {
         if (result.isConfirmed) {
           this.router.navigateByUrl('auth/login')
         }
@@ -138,7 +117,7 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          this.connectApiService.handerError(err)
+          this.blogService.handerError(err,"Opps...","Something went wrong!")
         }
       );
     }
@@ -151,7 +130,7 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          this.connectApiService.handerError(err)
+          this.blogService.handerError(err,"Opps...","Something went wrong!")
         });
     }
     else if(this.listConfig.filters) {
@@ -163,7 +142,7 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          this.connectApiService.handerError(err)
+          this.blogService.handerError(err,"Opps...","Something went wrong!")
         });
       }
       window.scrollTo(0, 0);

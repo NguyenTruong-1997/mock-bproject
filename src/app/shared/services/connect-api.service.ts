@@ -128,26 +128,7 @@ export class ConnectApiService {
     return this.http.get<Tags>(this.API_URL + '/tags');
   }
 
-  public handerError(err: any, isLoading?:boolean) {
-    if (err.error instanceof Error) {
-      console.log(`'An error occurred:', ${err.error.message}`);
-    } else {
-      console.log(
-        `Backend returned code ${err.status}, body was: ${err.error}`
-      );
-    }
-    if(isLoading){
-      isLoading = false;
-    }
-    Swal.fire({
-      icon: 'error',
-      iconColor: '#d33',
-      confirmButtonColor: '#0f0e15',
-      title: 'Oops...',
-      text: 'Something went wrong!',
-      timer: 1500,
-    });
-  }
+ 
 
   //#end region
 }
