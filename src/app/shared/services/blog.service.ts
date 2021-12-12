@@ -71,5 +71,16 @@ export class BlogService {
     this.isAuthenticatedSubject.next(status);
   }
 
+  public handerError(err: any, text:string="Opps...", title:string='Something went wrong!') {
+    if (err.error instanceof Error) {
+      console.log(`'An error occurred:', ${err.error.message}`);
+    } else {
+      console.log(
+        `Backend returned code ${err.status}, body was: ${err.error}`
+      );
+    }
+   this.errorSwal(title,text);
+  }
+
   //#end region
 }

@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { BlogService } from 'src/app/shared/services/blog.service';
 import { ConnectApiService } from 'src/app/shared/services/connect-api.service';
+import Swal from 'sweetalert2';
 
 import { Article } from '../../../../shared/models/article.model';
 import { HomeService } from '../../service/home.service';
@@ -28,7 +30,8 @@ export class ArticleListComponent implements OnInit {
   constructor(
     private connectApiService: ConnectApiService,
     private homeService: HomeService,
-    private blogService : BlogService
+    private blogService : BlogService,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +71,10 @@ export class ArticleListComponent implements OnInit {
         this.loading = false;
         this.results = res!.articles;
         this.length = res.articlesCount;
-      });
+      },  (err) => {
+        this.loading = false;
+        this.blogService.handerError(err)
+      })
   }
 
   tonggleFavorite(article: any, i: number) {
@@ -81,6 +87,7 @@ export class ArticleListComponent implements OnInit {
             this.results[i].favorited = res.article.favorited;
           });
         console.log('del');
+        this.blogService.succesSwal("Success","UnFavorited!")
       } else {
         this.connectApiService
           .onFavoriteArticle(article.slug)
@@ -89,10 +96,15 @@ export class ArticleListComponent implements OnInit {
             this.results[i].favorited = res.article.favorited;
           });
         console.log('post');
+        this.blogService.succesSwal("Success","Favorited!")
       }
     }
     else {
-      
+     this.blogService.questionSwal("Ban can dang nhap").then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigateByUrl('auth/login')
+        }
+      })
     }
   }
   handlePage(e: any) {
@@ -105,15 +117,9 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          if (err.error instanceof Error) {
-            console.log(`'An error occurred:', ${err.error.message}`);
-          } else {
-            console.log(
-              `Backend returned code ${err.status}, body was: ${err.error}`
-            );
-          }
+          this.blogService.handerError(err,"Opps...","Something went wrong!")
         }
-        );
+      );
     }
     else if(this.listConfig.type === 'feed') {
       this.offset = e.pageSize * e.pageIndex;
@@ -124,13 +130,7 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          if (err.error instanceof Error) {
-            console.log(`'An error occurred:', ${err.error.message}`);
-          } else {
-            console.log(
-              `Backend returned code ${err.status}, body was: ${err.error}`
-            );
-          }
+          this.blogService.handerError(err,"Opps...","Something went wrong!")
         });
     }
     else if(this.listConfig.filters) {
@@ -142,13 +142,7 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          if (err.error instanceof Error) {
-            console.log(`'An error occurred:', ${err.error.message}`);
-          } else {
-            console.log(
-              `Backend returned code ${err.status}, body was: ${err.error}`
-            );
-          }
+          this.blogService.handerError(err,"Opps...","Something went wrong!")
         });
       }
       window.scrollTo(0, 0);
