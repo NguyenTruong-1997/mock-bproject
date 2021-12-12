@@ -8,7 +8,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -37,8 +37,13 @@ export class AuthService {
         { user: { ...form } }
       )
       .pipe(
+        switchMap((res: GetUser) => {
+          localStorage.setItem('CURRENT_USER', JSON.stringify(res));
+          return this.getUser()
+        }),
         tap((res: GetUser) => {
           this.currentUser.next(res);
+          localStorage.removeItem('CURRENT_USER');
           localStorage.setItem('CURRENT_USER', JSON.stringify(res));
         })
       );
