@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { BlogService } from 'src/app/shared/services/blog.service';
 import { ConnectApiService } from 'src/app/shared/services/connect-api.service';
-import Swal from 'sweetalert2';
 
 import { Article } from '../../../../shared/models/article.model';
 import { HomeService } from '../../service/home.service';
@@ -117,7 +116,7 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          this.blogService.handerError(err,"Opps...","Something went wrong!")
+          this.blogService.handerError(err)
         }
       );
     }
@@ -130,7 +129,7 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          this.blogService.handerError(err,"Opps...","Something went wrong!")
+          this.blogService.handerError(err)
         });
     }
     else if(this.listConfig.filters) {
@@ -142,7 +141,7 @@ export class ArticleListComponent implements OnInit {
           this.results = res.articles;
         },
         (err) => {
-          this.blogService.handerError(err,"Opps...","Something went wrong!")
+          this.blogService.handerError(err)
         });
       }
       window.scrollTo(0, 0);
