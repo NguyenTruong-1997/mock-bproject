@@ -1,3 +1,4 @@
+import { BlogService } from 'src/app/shared/services/blog.service';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,7 +23,8 @@ export class SignupComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region Constructor
   public constructor(
     private authService: AuthService,
-    private roter: Router
+    private roter: Router,
+    private blogService: BlogService
   ) { }
 
   //#end region
@@ -41,28 +43,12 @@ export class SignupComponent implements OnInit, AfterViewInit, OnDestroy {
     const signupSub = this.authService.registration(form.value)
       .subscribe(() => {
         this.isLoading = false;
-        Swal.fire({
-          icon: 'success',
-          iconColor: '#0f0e15',
-          confirmButtonColor: '#0f0e15',
-          title: 'Conglaturation!',
-          text: 'Succesful login!',
-          showConfirmButton: false,
-          timer: 1500
-        });
+        this.blogService.succesSwal('Conglaturation!', 'Succesful register!')
         this.roter.navigate(['../auth/login']);
       }, (err) => {
         this.isLoading = false;
         console.log(err);
-        Swal.fire({
-          icon: 'error',
-          iconColor: '#d33',
-          confirmButtonColor: '#0f0e15',
-          title: 'Oops...',
-          text: 'Email has already been taken!',
-          showConfirmButton: false,
-          timer: 1500
-        })
+        this.blogService.errorSwal('Oops...', 'Something went wrong! Maybe your email has already been taken!')
       })
 
     this.subscriptions.add(signupSub);

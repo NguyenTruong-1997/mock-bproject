@@ -1,3 +1,4 @@
+import { BlogService } from 'src/app/shared/services/blog.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -27,7 +28,8 @@ export class SettingComponent implements OnInit, OnDestroy {
   public constructor(
     private authService: AuthService,
     private roter: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private blogService: BlogService
   ) { }
 
   //#end region
@@ -91,11 +93,7 @@ export class SettingComponent implements OnInit, OnDestroy {
     }, (err) => {
       this.isLoading = false;
       console.log(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!'
-      })
+      this.blogService.errorSwal('Oops...', 'Something went wrong!');
     })
 
     this.subscriptions.add(getUserSub);
@@ -112,41 +110,19 @@ export class SettingComponent implements OnInit, OnDestroy {
   }
 
   public onSetting(form: FormGroup) {
-    Swal.fire({
-      icon: 'question',
-      iconColor: '#0f0e15',
-      confirmButtonColor: '#0f0e15',
-      showCancelButton: true,
-      cancelButtonColor: '#0f0e15',
-      title: 'Are you sure?!',
-    }).then((result) => {
+    this.blogService.questionSwal('Are you sure!?')
+    .then((result) => {
       if (result.isConfirmed) {
         this.isLoading = true;
         const settingSub = this.authService.updateUser(form.value)
           .subscribe((res: GetUser) => {
             this.isLoading = false;
-            Swal.fire({
-              icon: 'success',
-              iconColor: '#0f0e15',
-              confirmButtonColor: '#0f0e15',
-              title: 'Conglaturation!',
-              text: 'Succesful update setting!',
-              showConfirmButton: false,
-              timer: 1500
-            });
+            this.blogService.succesSwal('Conglaturation!', 'Succesful update setting!')
             this.roter.navigate(['../home']);
           }, (err) => {
             this.isLoading = false;
             console.log(err);
-            Swal.fire({
-              icon: 'error',
-              iconColor: '#d33',
-              confirmButtonColor: '#0f0e15',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              showConfirmButton: false,
-              timer: 1500
-            })
+            this.blogService.errorSwal('Oops...', 'Something went wrong!');
           })
 
         this.subscriptions.add(settingSub);
@@ -155,24 +131,12 @@ export class SettingComponent implements OnInit, OnDestroy {
   }
 
   public onLogout() {
-    Swal.fire({
-      icon: 'question',
-      iconColor: '#0f0e15',
-      confirmButtonColor: '#0f0e15',
-      showCancelButton: true,
-      cancelButtonColor: '#0f0e15',
-      title: 'Are you sure to logout?!',
-    }).then((result) => {
+    this.blogService.questionSwal('Are you sure to logout?!')
+    .then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          icon: 'success',
-          iconColor: '#0f0e15',
-          confirmButtonColor: '#0f0e15',
-          title: 'Goodbye!',
-          showConfirmButton: false,
-          timer: 1500
-        });
+        this.blogService.succesSwal('Goodbye!', 'See youlater!')
         localStorage.removeItem('CURRENT_USER');
+        this.blogService.setIsLogin(false);
         this.authService.currentUser.next(null);
         this.roter.navigate(['../home']);
       }
