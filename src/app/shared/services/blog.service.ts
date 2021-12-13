@@ -40,6 +40,7 @@ export class BlogService {
       title: `${title}`,
       text: `${text}`,
       showConfirmButton: false,
+      timerProgressBar: true,
       timer: 1500
     });
   }
@@ -53,6 +54,7 @@ export class BlogService {
       title: `${title}`,
       text: `${text}`,
       showConfirmButton: false,
+      timerProgressBar: true,
       timer: 1500
     });
   }
@@ -63,7 +65,9 @@ export class BlogService {
       iconColor: '#0f0e15',
       title: `${title}`,
       confirmButtonColor: '#0f0e15',
-      showCancelButton: true
+      showCancelButton: true,
+      timerProgressBar: true,
+      timer: 3000
     });
   }
 
@@ -71,7 +75,7 @@ export class BlogService {
     this.isAuthenticatedSubject.next(status);
   }
 
-  public handerError(err: any, text:string="Opps...", title:string='Something went wrong!') {
+  public handerError(err: any, text: string="Oops...", title: string='Something went wrong!') {
     if (err.error instanceof Error) {
       console.log(`'An error occurred:', ${err.error.message}`);
     } else {

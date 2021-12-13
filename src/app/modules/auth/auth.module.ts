@@ -1,3 +1,4 @@
+import { CandeactiveService } from './../../shared/services/candeactive.service';
 import { NgModule } from '@angular/core';
 import { AuthRoutingModule } from './auth-routing.module';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
+import { LoadingFullscreenModule } from 'src/app/shared/components/loading-fullscreen/loading-fullscreen.module';
 
 
 
@@ -30,8 +32,9 @@ import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    LoadingFullscreenModule
   ],
-  providers: [SettingService]
+  providers: [SettingService, CandeactiveService]
 })
 export class AuthModule { }
