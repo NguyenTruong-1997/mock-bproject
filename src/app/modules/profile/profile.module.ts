@@ -13,6 +13,7 @@ import { ConnectApiService } from 'src/app/shared/services/connect-api.service';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
 import { DebounceDirective } from './DebounceDirective/debounce.directive';
 import {SummaryPipe} from '../../shared/pipes/summary.pipe'
+import { LoadingFullscreenModule } from 'src/app/shared/components/loading-fullscreen/loading-fullscreen.module';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -27,7 +28,7 @@ import {SummaryPipe} from '../../shared/pipes/summary.pipe'
     ReactiveFormsModule,
     MatTabsModule,
     MatPaginatorModule,
-
+    LoadingFullscreenModule,
     LoadingSpinnerModule,
     RouterModule.forChild([
       {
