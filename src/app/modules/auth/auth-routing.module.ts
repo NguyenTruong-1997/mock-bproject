@@ -1,3 +1,4 @@
+import { CandeactiveService } from './../../shared/services/candeactive.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/services/auth-guard.service';
@@ -19,7 +20,7 @@ const routes: Routes = [
     component: SignupComponent,
     canActivate: [LoginGuardService],
   },
-  { path: 'setting', component: SettingComponent, canActivate: [AuthGuard] },
+  { path: 'setting', component: SettingComponent, canActivate: [AuthGuard], canDeactivate: [CandeactiveService] },
 ];
 
 @NgModule({
