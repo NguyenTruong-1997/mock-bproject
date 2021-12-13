@@ -78,8 +78,6 @@ export class ArticleComponent implements OnInit {
       );
 
     this.subscriptions.add(getData);
-
-    console.log(this.currentUser);
   }
 
   addComment(comment: NgForm) {
@@ -210,6 +208,7 @@ export class ArticleComponent implements OnInit {
         .onFollowUser(this.article?.author?.username)
         .subscribe(
           (follow: { profile: Profile }) => {
+            console.log(follow);
             this.article.author = follow.profile!;
             Swal.fire({
               position: 'top-end',
@@ -244,6 +243,7 @@ export class ArticleComponent implements OnInit {
       .onUnfollowUser(this.article?.author?.username)
       .subscribe(
         (follow: { profile: Profile }) => {
+          console.log(follow);
           this.article.author = follow.profile!;
           Swal.fire({
             position: 'top-end',
