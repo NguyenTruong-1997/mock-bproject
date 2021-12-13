@@ -4,11 +4,10 @@
       <div class="col-12">
 
         <div *ngIf="isLoading" class="text-center spinner">
-          <app-loading-spinner></app-loading-spinner>
+          <app-loading-fullscreen></app-loading-fullscreen>
         </div>
         
         <form
-          *ngIf="!isLoading"
           class="signup-form"
           autocomplete="off"
           novalidate
