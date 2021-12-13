@@ -4,7 +4,6 @@ import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, ElementRef } fr
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',

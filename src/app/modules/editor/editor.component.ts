@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { switchMap, filter, tap } from 'rxjs/operators';
 import { SingleArticle } from 'src/app/shared/models/article.model';
 import { CanComponentDeactivate } from 'src/app/shared/services/candeactive.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editor',
@@ -20,7 +19,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
   
   public submitForm!: FormGroup;
 
-  public submitted = false;
+  private submitted = false;
   
   public subscriptions = new Subscription();
 
