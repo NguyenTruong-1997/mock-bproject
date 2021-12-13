@@ -24,9 +24,9 @@ $moonSize: 100%;
   left: 0;
   bottom: 0;
   right: 0;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 35%;
     width: 100%;
@@ -35,7 +35,7 @@ $moonSize: 100%;
     // border-radius: 100%;
     transform: scale(1.1);
   }
-  
+
   // &::before {
   //   content: '';
   //   position: absolute;
@@ -52,7 +52,7 @@ $moonSize: 100%;
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(-45deg, #0f0e15 0%,#0f0e15 100%);
+  background: linear-gradient(-45deg, #0f0e15 0%, #0f0e15 100%);
   // border-radius: 100%;
   overflow: hidden;
 }
@@ -61,7 +61,7 @@ $moonSize: 100%;
   position: absolute;
   width: 1px;
   height: 1px;
-  
+
   @for $i from 1 through 250 {
     $light: random(255);
     &:nth-child(#{$i}) {
@@ -77,7 +77,7 @@ $moonSize: 100%;
   width: 100%;
   height: 100%;
   animation: slide 30000ms linear infinite;
-  
+
   &:nth-child(2) {
     left: 100%;
   }
@@ -88,7 +88,11 @@ $moonSize: 100%;
   width: 50px;
   height: 3px;
   background: linear-gradient(90deg, rgba(#fff, 1), rgba(#fff, 0));
-  background: linear-gradient(90deg, rgba(#c2185b, 1) 0%, rgba(#80D0C7, 0) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(#c2185b, 1) 0%,
+    rgba(#80d0c7, 0) 100%
+  );
   opacity: 0;
   animation: shooting 5000ms linear infinite;
 
@@ -106,29 +110,28 @@ $moonSize: 100%;
     opacity: 0;
     transform: rotateZ(-30deg) translateX(0) scaleX(0);
   }
-  
+
   25% {
     opacity: 1;
     transform: rotateZ(-30deg) transalteX(-200%) scaleX(1);
   }
-  
+
   50% {
     opacity: 0;
     transform: rotateZ(-30deg) translateX(-400%) scaleX(2);
   }
-  
+
   100% {
     opacity: 0;
     transform: rotateZ(-30deg) translateX(-400%) scaleX(2);
   }
 }
 
-
 @keyframes slide {
   0% {
     transform: translateX(0);
   }
-  
+
   100% {
     transform: translateX(-100%);
   }

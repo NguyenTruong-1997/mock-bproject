@@ -34,16 +34,13 @@ export class ProfileArticleComponent implements OnInit {
       this.connectedService.onGetMultiArticlesByAuthor(this.limit ,this.offset, articles)
     ))
     .subscribe((data : any) => {
-      [this.newFeed, ...this.listArticle] = data.articles
-
-
+      [this.newFeed, ...this.listArticle] = data.articles;
       this.length = data.articlesCount;
       this.isLoadingArticle = false;
 
     }, error => {
       console.log(error);
       this.isLoadingArticle = false;
-
     })
   }
 
