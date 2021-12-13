@@ -2,59 +2,133 @@
 <div *ngIf="loading" class="text-center spinner">
     <app-loading-spinner></app-loading-spinner>
 </div>
-
-<div
-  class="article-preview"
-  *ngFor="
-    let article of results;
-    let i = index
-  "
->
-  <div class="article-meta">
-    <a [routerLink]="['/profile', article.author.username]">
-      <img [src]="article.author.image" style="width: 30px; height: 30px" />
-    </a>
-
-    <div class="info">
-      <a class="author" routerLink="/profile">
-        {{ article.author.username }}
+<!-- <div class="article">
+  <div
+    class="article-preview col-4"
+    *ngFor="
+      let article of results;
+      let i = index
+    "
+  >
+    <div class="article-item">
+      <a [routerLink]="['/profile', article.author.username]">
+        <img [src]="article.author.image" style="width: 30px; height: 30px" />
       </a>
-      <span class="date">
-        {{ article.createdAt | date: "longDate" }}
-      </span>
+  
+      <div class="info">
+        <a class="author" routerLink="/profile">
+          {{ article.author.username }}
+        </a>
+        <span class="date">
+          {{ article.createdAt | date: "longDate" }}
+        </span>
+      </div>
+  
+      <button
+        appDebounceClick
+        [debounceTime]="300"
+        class="m-2 p-2"
+        style="cursor: pointer"
+        (debounceClick)="tonggleFavorite(article, i)"
+        [ngClass]="{ 'btn-primary': results[i].favorited }"
+      >
+        <i class="fas fa-heart mx-2" style="font-size: 20px; color: tomato"></i>
+        {{ results[i].favoritesCount }}
+      </button>
+  
+      <a [routerLink]="['/article', article.slug]" class="preview-link">
+        <h1>{{ article.title }}</h1>
+        <p>{{ article.description }}</p>
+        <span>Read more...</span>
+        <ul class="tag-list">
+          <li
+            class="tag-default tag-pill tag-outline"
+            *ngFor="let tag of article.tagList"
+          >
+            {{ tag }}
+          </li>
+        </ul>
+      </a>
     </div>
-
-    <button
-      appDebounceClick
-      [debounceTime]="300"
-      class="m-2 p-2"
-      style="cursor: pointer"
-      (debounceClick)="tonggleFavorite(article, i)"
-      [ngClass]="{ 'btn-primary': results[i].favorited }"
-    >
-      <i class="fas fa-heart mx-2" style="font-size: 20px; color: tomato"></i>
-      {{ results[i].favoritesCount }}
-    </button>
-
-    <a [routerLink]="['/article', article.slug]" class="preview-link">
-      <h1>{{ article.title }}</h1>
-      <p>{{ article.description }}</p>
-      <span>Read more...</span>
-      <ul class="tag-list">
-        <li
-          class="tag-default tag-pill tag-outline"
-          *ngFor="let tag of article.tagList"
-        >
-          {{ tag }}
-        </li>
-      </ul>
-    </a>
+  
+    <div class="app-article-preview" [hidden]="results.length">
+      No articles are here... yet.
+    </div>
   </div>
+</div> -->
 
-  <div class="app-article-preview" [hidden]="results.length">
-    No articles are here... yet.
+<div class="profile">
+    <div class="row">
+      <div
+        class="article col col-4 col-d-6 col-t-12"
+        *ngFor="let article of results;
+        let i = index"
+      >
+        <div class="article-card">
+          <a class="article-img" [routerLink]="['../article', article.slug]">
+            <img
+              class="img"
+              src="http://norlin.anvodstudio.com/content/images/2020/11/110.jpg"
+              alt=""
+            />
+          </a>
+
+          <div class="article-content">
+            <div class="article-meta">
+              <time class="article-date"
+                >{{article.createdAt | date : 'longDate' }}</time
+              >
+            </div>
+            <div class="article-title">
+              <p>{{article.title}}</p>
+            </div>
+
+            <p class="article-excerpt">
+              {{article.description}}
+            </p>
+            <div class="article-bottom">
+              <div class="article-author">
+                <a class="btn" [routerLink]="['/profile', article.author.username]"
+                  ><img
+                    class="img-author"
+                    src="{{ article.author.image }}"
+                    alt=""
+                /></a>
+              </div>
+              <div class="article-bottom-meta">
+                <a routerLink="/profile" class="article-bottom-user">{{article.author.username}}</a>
+              </div>
+              <a
+              appDebounceClick
+              [debounceTime]="300"
+              class="m-2 p-2"
+              style="cursor: pointer"
+              (debounceClick)="tonggleFavorite(article, i)"
+              [ngClass]="{ 'btn-primary': results[i].favorited }"
+            ><i class="fas fa-heart mx-2" style="font-size: 20px; color: tomato"></i>
+            {{ results[i].favoritesCount }}
+            </a>
+
+            <span
+            class="post-tag"
+          >
+            <a *ngFor="let tag of article.tagList">
+            {{ tag }}</a
+            >
+          </span>
+          <!-- <ul class="tag-list">
+            <li
+              class="tag-default tag-pill tag-outline"
+              *ngFor="let tag of article.tagList"
+            >
+              {{ tag }}
+            </li>
+          </ul> -->
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
-
 </div>
 
 <mat-paginator #paginator [length]="length" [pageSizeOptions]="[5, 10, 100]" aria-label="Select page" (page)="handlePage($event)">
