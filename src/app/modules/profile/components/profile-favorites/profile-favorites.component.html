@@ -14,7 +14,7 @@
             />
           </a>
           <div class="article-content">
-            <div class="article-meta">
+            <div class="article-meta d-flex justify-content-end">
               <time class="article-date" datetime="2020-11-21"
                 >{{article.createdAt | date : 'longDate' }}</time
               >
@@ -24,9 +24,10 @@
             </div>
 
             <p class="article-excerpt">
-              {{article.description}}
+              {{article.description | summary: 50}}
             </p>
-            <div class="article-bottom">
+
+            <div class="article-bottom d-flex justify-content-between align-items-end">
               <div class="article-author">
                 <a [routerLink]="['../../../profile',article.author.username ]"
                   ><img
@@ -35,9 +36,10 @@
                 "
                     alt=""
                 /></a>
+                <a href="" class="article-bottom-user" [routerLink]="['../../../profile',article.author.username ]">{{article.author.username}}</a>
               </div>
               <div class="article-bottom-meta">
-                <a href="" class="article-bottom-user" [routerLink]="['../../../profile',article.author.username ]">{{article.author.username}}</a>
+
              <a appDebounceClick [debounceTime]="300" class="btn  article-like" *ngIf="!listFavorites[i].favorited" (debounceClick)="onFavoriteArticle(article.slug, i)"  >
                 <i class="far fa-heart"></i> {{ listFavorites[i].favoritesCount}}</a>
               <a appDebounceClick [debounceTime]="300" class="btn  article-like" *ngIf="listFavorites[i].favorited" (debounceClick)="onUnfavoriteArticle(article.slug, i)"  >

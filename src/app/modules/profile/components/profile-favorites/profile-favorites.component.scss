@@ -50,7 +50,7 @@
 .article-content {
   z-index: 1;
   width: 100%;
-  margin-top: 25%;
+  margin-top: 10%;
   padding: 0 32px 32px;
   pointer-events: none;
   margin-bottom: 10%;
@@ -59,25 +59,24 @@
   line-height: 12px;
 }
 .article-date {
-  color: #aaa;
   font-size: 15px;
   line-height: 1;
   font-weight: 500;
 }
 .article-title {
-  margin: 12px 0 12px;
-  font-size: 28px;
+  margin: 12px 0 15px;
+  font-size: 30px;
+  font-weight: 700;
   line-height: 1;
 }
 .article-bottom {
-  display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 20px;
   line-height: 18px;
   font-weight: 500;
   color: #fff;
   position: absolute;
-  bottom: 20px;
+  bottom: 5%;
 }
 .img-author {
   position: relative;
@@ -91,7 +90,7 @@
   overflow: hidden;
 }
 .article-bottom-user {
-  font-size: 12px;
+  font-size: 15px;
   color: #fff;
 }
 .article-bottom-tag a {
