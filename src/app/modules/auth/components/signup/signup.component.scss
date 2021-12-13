@@ -1,5 +1,4 @@
 .signup {
-  background-color: #0f0e15;
   min-height: 70vh;
   @media (min-width:700px) and (max-width:768px) {
     height: 83vh;
@@ -11,6 +10,7 @@
     width: 100%;
     max-width: 550px;
     margin: 20px auto 5vw;
+    box-shadow: rgba(194, 24, 91, 0.4) 5px 5px, rgba(194, 24, 91, 0.3) 10px 10px, rgba(194, 24, 91, 0.2) 15px 15px, rgba(194, 24, 91, 0.1) 20px 20px, rgba(194, 24, 91, 0.05) 25px 25px;
     .signup__title {
       img {
         background-color: #fff;

@@ -1,3 +1,4 @@
+import { CandeactiveService } from './../../shared/services/candeactive.service';
 import { NgModule } from '@angular/core';
 import { AuthRoutingModule } from './auth-routing.module';
 import { CommonModule } from '@angular/common';
@@ -34,6 +35,6 @@ import { LoadingFullscreenModule } from 'src/app/shared/components/loading-fulls
     LoadingSpinnerModule,
     LoadingFullscreenModule
   ],
-  providers: [SettingService]
+  providers: [SettingService, CandeactiveService]
 })
 export class AuthModule { }

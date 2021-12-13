@@ -1,5 +1,4 @@
 .article-editor {
-  background-color: #0f0e15;
   @media (min-width:769px) and (max-width:1024px) {
     height: 70vh;
   }
@@ -13,6 +12,7 @@
     width: 100%;
     max-width: 550px;
     margin: 0 auto 3vw;
+    box-shadow: rgba(194, 24, 91, 0.4) 5px 5px, rgba(194, 24, 91, 0.3) 10px 10px, rgba(194, 24, 91, 0.2) 15px 15px, rgba(194, 24, 91, 0.1) 20px 20px, rgba(194, 24, 91, 0.05) 25px 25px;
     .article-editor__logo {
       img {
         background-color: #fff;
