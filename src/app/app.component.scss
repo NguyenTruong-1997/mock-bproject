@@ -1,0 +1,135 @@
+$moonColor: #ffe645;
+$moonSize: 100%;
+
+// body {
+//   background: $moonColor;
+//   height: 100vh;
+//   overflow: hidden;
+//   display: flex;
+//   font-family: 'Anton', sans-serif;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+.main-content {
+  z-index: 1;
+  position: relative;
+}
+
+.night {
+  position: fixed;
+  width: $moonSize;
+  height: $moonSize;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 35%;
+    width: 100%;
+    height: 100%;
+    // background: $moonColor;
+    // border-radius: 100%;
+    transform: scale(1.1);
+  }
+  
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   bottom: -3%;
+  //   left: -10%;
+  //   width: 70%;
+  //   height: 6%;
+  //   background: #edcd2b;
+  //   border-radius: 100%;
+  // }
+}
+
+.window {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #0f0e15 0%,#0f0e15 100%);
+  // border-radius: 100%;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  
+  @for $i from 1 through 250 {
+    $light: random(255);
+    &:nth-child(#{$i}) {
+      top: random(100) + 0%;
+      left: random(100) + 0%;
+      background: rgb($light, $light, $light);
+    }
+  }
+}
+
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: slide 30000ms linear infinite;
+  
+  &:nth-child(2) {
+    left: 100%;
+  }
+}
+
+.shooting {
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(#fff, 1), rgba(#fff, 0));
+  background: linear-gradient(90deg, rgba(#c2185b, 1) 0%, rgba(#80D0C7, 0) 100%);
+  opacity: 0;
+  animation: shooting 5000ms linear infinite;
+
+  @for $i from 1 through 50 {
+    &:nth-child(#{$i}) {
+      top: random(100) + 0%;
+      left: random(100) + 0%;
+      animation-delay: random(9999) * 1ms;
+    }
+  }
+}
+
+@keyframes shooting {
+  0% {
+    opacity: 0;
+    transform: rotateZ(-30deg) translateX(0) scaleX(0);
+  }
+  
+  25% {
+    opacity: 1;
+    transform: rotateZ(-30deg) transalteX(-200%) scaleX(1);
+  }
+  
+  50% {
+    opacity: 0;
+    transform: rotateZ(-30deg) translateX(-400%) scaleX(2);
+  }
+  
+  100% {
+    opacity: 0;
+    transform: rotateZ(-30deg) translateX(-400%) scaleX(2);
+  }
+}
+
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  
+  100% {
+    transform: translateX(-100%);
+  }
+}
