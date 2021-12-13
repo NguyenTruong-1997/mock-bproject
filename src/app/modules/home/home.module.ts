@@ -10,7 +10,7 @@ import { ArticleFeedComponent } from './components/article-feed/article-feed.com
 import { DebounceClickDirective } from '../../shared/directives/debounce.directive';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
-
+import { LoadingFullscreenModule} from '../../shared/components/loading-fullscreen/loading-fullscreen.module'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -25,6 +25,7 @@ import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/
     ReactiveFormsModule,
     MatPaginatorModule,
     LoadingSpinnerModule,
+    LoadingFullscreenModule,
     RouterModule.forChild([{ path: '', component: HomeComponent }]),
   ],
   providers: [HomeService],

@@ -10,7 +10,9 @@ $moonSize: 100%;
 //   justify-content: center;
 //   align-items: center;
 // }
-
+main {
+  min-height: 400px;
+}
 .main-content {
   z-index: 1;
   position: relative;

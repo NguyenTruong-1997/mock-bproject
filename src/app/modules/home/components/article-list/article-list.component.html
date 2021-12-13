@@ -1,6 +1,7 @@
 
-<div *ngIf="loading" class="text-center spinner">
-    <app-loading-spinner></app-loading-spinner>
+<div *ngIf="loading">
+    <!-- <app-loading-spinner></app-loading-spinner> -->
+    <app-loading-fullscreen></app-loading-fullscreen>
 </div>
 <!-- <div class="article">
   <div
@@ -57,7 +58,7 @@
   </div>
 </div> -->
 
-<div class="profile">
+<div class="profile ">
     <div class="row">
       <div
         class="article col col-4 col-d-6 col-t-12"
@@ -96,7 +97,7 @@
                 /></a>
               </div>
               <div class="article-bottom-meta">
-                <a routerLink="/profile" class="article-bottom-user">{{article.author.username}}</a>
+                <a [routerLink]="['/profile', article.author.username]" class="article-bottom-user">{{article.author.username}}</a>
               </div>
               <a
               appDebounceClick
@@ -131,5 +132,5 @@
   </div>
 </div>
 
-<mat-paginator #paginator [length]="length" [pageSizeOptions]="[5, 10, 100]" aria-label="Select page" (page)="handlePage($event)">
+<mat-paginator [hidden]="!results.length" #paginator [length]="length" [pageSizeOptions]="[5, 10, 100]" aria-label="Select page" (page)="handlePage($event)">
 </mat-paginator>

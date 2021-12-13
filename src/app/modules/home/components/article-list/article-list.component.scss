@@ -28,8 +28,9 @@
     height: 100%;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 5px 10px 0 rgb(0 0 0 / 50%);
+    box-shadow: 0 5px 10px 0 rgba(255, 123, 123, 0.5);
     background-color: #09080f;
+    // box-shadow: 0 1.5rem 2.5rem rgba(255, 123, 123, 0.4);
   }
   .article-img {
     position: absolute;
@@ -90,7 +91,7 @@
     height: 36px;
     padding: 3px;
     margin-right: 8px;
-    border: 2px solid #ff7b7b;
+    border: 2px solid rgb(255, 123, 123);
     border-radius: 50%;
     overflow: hidden;
   }
@@ -167,6 +168,9 @@
 // .post-tag > a:hover {
 //   border-color: rgba(255, 123, 123, 0.7);
 // }
+.article-excerpt {
+  // color: white; text-shadow: rgb(0, 0, 0) 0.1em 0.1em 0.2em;
+}
 
 .post-tag a:hover {
   color: #fff;
@@ -186,7 +190,7 @@
   color: #aaa;
 }
 .article-excerpt {
-  
+
 }
 //  .article-item:nth-child(odd) {
 //    display: block;
