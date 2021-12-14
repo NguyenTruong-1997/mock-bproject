@@ -60,6 +60,10 @@
             </mat-error>
           </mat-form-field>
 
+          <div class="post-tag d-flex mb-2" *ngIf="listTags">
+            <a class="text-gray me-2" *ngFor="let tag of listTags">{{ tag }}</a>
+          </div>
+
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>What do you want to share!?</mat-label>
             <textarea

@@ -1,9 +1,8 @@
 .header {
-  // background-color: #0f0e15;
   height: 15vh;
   display: flex;
   align-items: center;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 990px) {
     height: auto;
   }
   .container {
@@ -29,7 +28,7 @@
       }
     }
     .nav-phone {
-      @media screen and (min-width: 769px) {
+      @media screen and (min-width: 990px) {
         display: none!important;
       }
     }
