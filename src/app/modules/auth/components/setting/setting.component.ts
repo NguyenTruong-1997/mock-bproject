@@ -1,3 +1,4 @@
+import { CanComponentDeactivate } from './../../../../shared/services/candeactive.service';
 import { BlogService } from 'src/app/shared/services/blog.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -5,14 +6,13 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { GetUser } from 'src/app/shared/models/user.model';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.scss']
 })
-export class SettingComponent implements OnInit, OnDestroy {
+export class SettingComponent implements OnInit, AfterViewInit, OnDestroy, CanComponentDeactivate {
   //#region Properties
   @ViewChild('inpFocus') inpFocus!: ElementRef;
 
@@ -21,6 +21,10 @@ export class SettingComponent implements OnInit, OnDestroy {
   public settingForm!: FormGroup;
 
   public isLoading = false;
+
+  private submitted = false;
+
+  private logouted = false;
 
   //#end region
 
@@ -105,11 +109,26 @@ export class SettingComponent implements OnInit, OnDestroy {
     })
   }
 
+  public canDeativate(): boolean | Promise<boolean> {
+    if(this.settingForm.dirty && !this.submitted && !this.logouted) {
+      return this.blogService.questionSwal('Are you sure to leave!?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          return true;
+        } else {
+          return false
+        }
+      })
+    }
+    return true;
+  }
+
   public get handle(): { [key: string]: AbstractControl } {
     return this.settingForm.controls;
   }
 
   public onSetting(form: FormGroup) {
+    this.submitted = true;
     this.blogService.questionSwal('Are you sure!?')
     .then((result) => {
       if (result.isConfirmed) {
@@ -134,9 +153,9 @@ export class SettingComponent implements OnInit, OnDestroy {
     this.blogService.questionSwal('Are you sure to logout?!')
     .then((result) => {
       if (result.isConfirmed) {
-        this.blogService.succesSwal('Goodbye!', 'See youlater!')
+        this.logouted = true;
+        this.blogService.succesSwal('Goodbye!', 'See youlater!');
         localStorage.removeItem('CURRENT_USER');
-        this.blogService.setIsLogin(false);
         this.authService.currentUser.next(null);
         this.roter.navigate(['../home']);
       }

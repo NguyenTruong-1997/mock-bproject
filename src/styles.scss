@@ -3,37 +3,16 @@
 html,
 body {
   height: 100%;
+
+}
+html:focus-within {
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-//Style1
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #0f0e15;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-  background-color: #0f0e15;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #c2185b;
-  background-image: -webkit-linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.2) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0.2) 75%,
-    transparent 75%,
-    transparent
-  );
-}
-//style2
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #0f0e15;
@@ -58,4 +37,17 @@ body {
     transparent 75%,
     transparent
   );
+}
+
+::selection {
+  background:#ff7b7b; 
+  color: #fff;
+}
+::-moz-selection {
+  background:#ff7b7b; 
+  color:#fff;
+}
+::-webkit-selection {
+  background:#ff7b7b; 
+  color:#fff;
 }

@@ -4,7 +4,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -48,7 +47,7 @@ export class SignupComponent implements OnInit, AfterViewInit, OnDestroy {
       }, (err) => {
         this.isLoading = false;
         console.log(err);
-        this.blogService.errorSwal('Oops...', 'Something went wrong! Maybe your email has already been taken!')
+        this.blogService.errorSwal('Oops...', 'Something went wrong! Maybe your email or name has already been taken!')
       })
 
     this.subscriptions.add(signupSub);

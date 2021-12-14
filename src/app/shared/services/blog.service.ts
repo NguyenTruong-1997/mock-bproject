@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 
@@ -7,9 +6,6 @@ import Swal from 'sweetalert2';
 })
 export class BlogService {
   //#region Properties
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
   //#end region
 
@@ -34,12 +30,12 @@ export class BlogService {
   public succesSwal(title: string, text: string) {
     return Swal.fire({
       icon: 'success',
-      position: 'top-end',
       iconColor: '#0f0e15',
       confirmButtonColor: '#0f0e15',
       title: `${title}`,
       text: `${text}`,
       showConfirmButton: false,
+      timerProgressBar: true,
       timer: 1500
     });
   }
@@ -47,12 +43,12 @@ export class BlogService {
   public errorSwal(title: string, text: string) {
     return Swal.fire({
       icon: 'error',
-      position: 'top-end',
       iconColor: '#0f0e15',
       confirmButtonColor: '#0f0e15',
       title: `${title}`,
       text: `${text}`,
       showConfirmButton: false,
+      timerProgressBar: true,
       timer: 1500
     });
   }
@@ -63,12 +59,21 @@ export class BlogService {
       iconColor: '#0f0e15',
       title: `${title}`,
       confirmButtonColor: '#0f0e15',
-      showCancelButton: true
+      showCancelButton: true,
+      timerProgressBar: true,
+      timer: 3000
     });
   }
 
-  public setIsLogin(status: boolean) {
-    this.isAuthenticatedSubject.next(status);
+  public handerError(err: any, text: string = "Oops...", title: string = 'Something went wrong!') {
+    if (err.error instanceof Error) {
+      console.log(`'An error occurred:', ${err.error.message}`);
+    } else {
+      console.log(
+        `Backend returned code ${err.status}, body was: ${err.error}`
+      );
+    }
+   this.errorSwal(title,text);
   }
 
   //#end region

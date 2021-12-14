@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { switchMap, filter, tap } from 'rxjs/operators';
 import { SingleArticle } from 'src/app/shared/models/article.model';
 import { CanComponentDeactivate } from 'src/app/shared/services/candeactive.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editor',
@@ -20,7 +19,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
   
   public submitForm!: FormGroup;
 
-  public submitted = false;
+  private submitted = false;
   
   public subscriptions = new Subscription();
 
@@ -29,6 +28,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
   public isLoading = false;
 
   public slug: string = '';
+
+  public listTags: string[] = [];
 
   //#end region
 
@@ -113,6 +114,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
               ],
             });
             this.slug = res.article.slug;
+            this.listTags = res.article.tagList;
           } else {
             this.router.navigate(['page-not-found'])
           }

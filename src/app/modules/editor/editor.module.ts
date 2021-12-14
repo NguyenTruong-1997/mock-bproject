@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
 import { CandeactiveService } from 'src/app/shared/services/candeactive.service';
+import { LoadingFullscreenModule } from 'src/app/shared/components/loading-fullscreen/loading-fullscreen.module';
 
 
 
@@ -24,6 +25,7 @@ import { CandeactiveService } from 'src/app/shared/services/candeactive.service'
     MatFormFieldModule,
     MatInputModule,
     LoadingSpinnerModule,
+    LoadingFullscreenModule,
     RouterModule.forChild([
       { path: '', component: EditorComponent, canDeactivate: [CandeactiveService] },
       { path: ':slug', component: EditorComponent, canDeactivate: [CandeactiveService] }

@@ -1,0 +1,112 @@
+$moonSize: 100%;
+
+.main-content {
+  z-index: 1;
+  position: relative;
+}
+
+.night {
+  position: fixed;
+  width: $moonSize;
+  height: $moonSize;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 35%;
+    width: 100%;
+    height: 100%;
+    transform: scale(1.1);
+  }
+}
+
+.window {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #0f0e15 0%,#0f0e15 100%);
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  @for $i from 1 through 250 {
+    $light: random(255);
+    &:nth-child(#{$i}) {
+      top: random(100) + 0%;
+      left: random(100) + 0%;
+      background: rgb($light, $light, $light);
+    }
+  }
+}
+
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: slide 30000ms linear infinite;
+
+  &:nth-child(2) {
+    left: 100%;
+  }
+}
+
+.shooting {
+  position: absolute;
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(#fff, 1), rgba(#fff, 0));
+  background: linear-gradient(
+    90deg,
+    rgba(#c2185b, 1) 0%,
+    rgba(#80d0c7, 0) 100%
+  );
+  opacity: 0;
+  animation: shooting 5000ms linear infinite;
+
+  @for $i from 1 through 50 {
+    &:nth-child(#{$i}) {
+      top: random(100) + 0%;
+      left: random(100) + 0%;
+      animation-delay: random(9999) * 1ms;
+    }
+  }
+}
+
+@keyframes shooting {
+  0% {
+    opacity: 0;
+    transform: rotateZ(-30deg) translateX(0) scaleX(0);
+  }
+
+  25% {
+    opacity: 1;
+    transform: rotateZ(-30deg) transalteX(-200%) scaleX(1);
+  }
+
+  50% {
+    opacity: 0;
+    transform: rotateZ(-30deg) translateX(-400%) scaleX(2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotateZ(-30deg) translateX(-400%) scaleX(2);
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}

@@ -4,7 +4,6 @@ import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, ElementRef } fr
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +44,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.isLoading = false;
         this.blogService.succesSwal('Succesful login!', 'Welcome back!');
-        this.blogService.setIsLogin(true);
         this.router.navigate(['../home']);
       }, (err) => {
         this.isLoading = false;
