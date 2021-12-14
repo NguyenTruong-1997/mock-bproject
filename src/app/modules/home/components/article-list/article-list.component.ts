@@ -26,6 +26,7 @@ export class ArticleListComponent implements OnInit,OnDestroy {
   listConfig:any = {};
   checkOffset:boolean = false;
   articleNewFeed : string = '';
+  pageIndex : number = 0;
 
   constructor(
     private connectApiService: ConnectApiService,
@@ -41,7 +42,6 @@ export class ArticleListComponent implements OnInit,OnDestroy {
           if (name.type === 'all') {
             this.loading = true;
             this.listConfig = name;
-            console.log(name.type);
             return this.connectApiService.onGetGlobalFeedArticles(
               this.limit,
               this.offset
@@ -49,7 +49,6 @@ export class ArticleListComponent implements OnInit,OnDestroy {
           } else if (name.type === 'feed') {
             this.loading = true;
             this.listConfig = name;
-            console.log(name.type);
             return this.connectApiService.onGetMyFeedArticles(
               this.limit,
               this.offset
@@ -88,18 +87,16 @@ export class ArticleListComponent implements OnInit,OnDestroy {
           .subscribe((res) => {
             this.results[i].favoritesCount = res.article.favoritesCount;
             this.results[i].favorited = res.article.favorited;
+            this.blogService.succesSwal("Success",`Unfavorited ${this.results[i].author.username} successfully!`)
           });
-        console.log('del');
-        this.blogService.succesSwal("Success",`Unfavorited ${this.results[i].author.username} successfully!`)
       } else {
         this.connectApiService
           .onFavoriteArticle(article.slug)
           .subscribe((res) => {
             this.results[i].favoritesCount = res.article.favoritesCount;
             this.results[i].favorited = res.article.favorited;
+            this.blogService.succesSwal("Success",`Favorited ${this.results[i].author.username} successfully!`)
           });
-        console.log('post');
-        this.blogService.succesSwal("Success",`Favorited ${this.results[i].author.username} successfully!`)
       }
     }
     else {
@@ -112,6 +109,7 @@ export class ArticleListComponent implements OnInit,OnDestroy {
   }
   
   handlePage(e: any) {
+    this.pageIndex = e.pageIndex
     if(this.listConfig.type === 'all') {
       this.offset = e.pageSize * e.pageIndex;
       this.limit = e.pageSize;
@@ -155,6 +153,10 @@ export class ArticleListComponent implements OnInit,OnDestroy {
   setListTag(type: string = '', filters: any) {
     this.homeService.setTag({ type: type, filters: filters });
     scrollTo(0,700)
+  }
+
+  showImages(i: number) {
+    return ((this.pageIndex + 1) * i) % 10;
   }
 
   ngOnDestroy() {

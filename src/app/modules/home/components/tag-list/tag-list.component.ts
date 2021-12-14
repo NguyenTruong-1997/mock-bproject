@@ -22,10 +22,6 @@ export class TagListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.homeService.tag.subscribe((res) => {
-    //   this.listConfig = res;
-    // });
-
     this.connectApiService.onGetTags().subscribe(res => {
       this.tags = res.tags;
       

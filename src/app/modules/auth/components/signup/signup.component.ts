@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit, AfterViewInit, OnDestroy {
       }, (err) => {
         this.isLoading = false;
         console.log(err);
-        this.blogService.errorSwal('Oops...', 'Something went wrong! Maybe your email has already been taken!')
+        this.blogService.errorSwal('Oops...', 'Something went wrong! Maybe your email or name has already been taken!')
       })
 
     this.subscriptions.add(signupSub);

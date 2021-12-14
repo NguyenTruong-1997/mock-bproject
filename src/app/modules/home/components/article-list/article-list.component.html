@@ -15,7 +15,7 @@
           <a class="article-img" [routerLink]="['/article', article.slug]">
             <img
               class="img"
-              src="http://norlin.anvodstudio.com/content/images/2020/11/110.jpg"
+              src='{{ "../../../../../../../assets/images/" + showImages(i+1) + ".jpg" }}'
               alt=""
             />
           </a>

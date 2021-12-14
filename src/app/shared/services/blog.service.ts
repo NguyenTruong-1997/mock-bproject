@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 
@@ -7,9 +6,6 @@ import Swal from 'sweetalert2';
 })
 export class BlogService {
   //#region Properties
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
   //#end region
 
@@ -34,7 +30,6 @@ export class BlogService {
   public succesSwal(title: string, text: string) {
     return Swal.fire({
       icon: 'success',
-      position: 'top-end',
       iconColor: '#0f0e15',
       confirmButtonColor: '#0f0e15',
       title: `${title}`,
@@ -48,7 +43,6 @@ export class BlogService {
   public errorSwal(title: string, text: string) {
     return Swal.fire({
       icon: 'error',
-      position: 'top-end',
       iconColor: '#0f0e15',
       confirmButtonColor: '#0f0e15',
       title: `${title}`,
@@ -71,11 +65,7 @@ export class BlogService {
     });
   }
 
-  public setIsLogin(status: boolean) {
-    this.isAuthenticatedSubject.next(status);
-  }
-
-  public handerError(err: any, text: string="Oops...", title: string='Something went wrong!') {
+  public handerError(err: any, text: string = "Oops...", title: string = 'Something went wrong!') {
     if (err.error instanceof Error) {
       console.log(`'An error occurred:', ${err.error.message}`);
     } else {
