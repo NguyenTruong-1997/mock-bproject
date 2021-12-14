@@ -29,6 +29,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
 
   public slug: string = '';
 
+  public listTags: string[] = [];
+
   //#end region
 
   //#region Constructor
@@ -112,6 +114,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
               ],
             });
             this.slug = res.article.slug;
+            this.listTags = res.article.tagList;
           } else {
             this.router.navigate(['page-not-found'])
           }

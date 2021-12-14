@@ -1,10 +1,5 @@
 .setting {
-  @media (min-width:769px) and (max-width:1024px) {
-    height: 70vh;
-  }
-  @media (min-width:700px) and (max-width:768px) {
-    height: 83vh;
-  }
+  min-height: 70vh;
   .setting-form {
     padding: 20px;
     border: 1px solid #eee;

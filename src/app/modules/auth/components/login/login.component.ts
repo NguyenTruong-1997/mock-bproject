@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.isLoading = false;
         this.blogService.succesSwal('Succesful login!', 'Welcome back!');
-        this.blogService.setIsLogin(true);
         this.router.navigate(['../home']);
       }, (err) => {
         this.isLoading = false;
