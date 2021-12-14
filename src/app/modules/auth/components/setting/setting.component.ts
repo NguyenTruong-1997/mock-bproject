@@ -24,6 +24,8 @@ export class SettingComponent implements OnInit, AfterViewInit, OnDestroy, CanCo
 
   private submitted = false;
 
+  private logouted = false;
+
   //#end region
 
   //#region Constructor
@@ -108,7 +110,7 @@ export class SettingComponent implements OnInit, AfterViewInit, OnDestroy, CanCo
   }
 
   public canDeativate(): boolean | Promise<boolean> {
-    if(this.settingForm.dirty && !this.submitted) {
+    if(this.settingForm.dirty && !this.submitted && !this.logouted) {
       return this.blogService.questionSwal('Are you sure to leave!?')
       .then((result) => {
         if (result.isConfirmed) {
@@ -151,9 +153,9 @@ export class SettingComponent implements OnInit, AfterViewInit, OnDestroy, CanCo
     this.blogService.questionSwal('Are you sure to logout?!')
     .then((result) => {
       if (result.isConfirmed) {
-        this.blogService.succesSwal('Goodbye!', 'See youlater!')
+        this.logouted = true;
+        this.blogService.succesSwal('Goodbye!', 'See youlater!');
         localStorage.removeItem('CURRENT_USER');
-        this.blogService.setIsLogin(false);
         this.authService.currentUser.next(null);
         this.roter.navigate(['../home']);
       }

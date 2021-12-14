@@ -1,8 +1,6 @@
 .login {
   min-height: 70vh;
-  @media (min-width:700px) and (max-width:768px) {
-    height: 84vh;
-  }
+  max-height: 100vh;
   .login-form {
     padding: 20px;
     border: 1px solid #eee;
