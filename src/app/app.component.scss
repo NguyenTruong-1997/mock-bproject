@@ -1,18 +1,5 @@
-$moonColor: #ffe645;
 $moonSize: 100%;
 
-// body {
-//   background: $moonColor;
-//   height: 100vh;
-//   overflow: hidden;
-//   display: flex;
-//   font-family: 'Anton', sans-serif;
-//   justify-content: center;
-//   align-items: center;
-// }
-main {
-  min-height: 400px;
-}
 .main-content {
   z-index: 1;
   position: relative;
@@ -33,37 +20,22 @@ main {
     left: 35%;
     width: 100%;
     height: 100%;
-    // background: $moonColor;
-    // border-radius: 100%;
     transform: scale(1.1);
   }
-
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   bottom: -3%;
-  //   left: -10%;
-  //   width: 70%;
-  //   height: 6%;
-  //   background: #edcd2b;
-  //   border-radius: 100%;
-  // }
 }
 
 .window {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(-45deg, #0f0e15 0%, #0f0e15 100%);
-  // border-radius: 100%;
+  background: linear-gradient(-45deg, #0f0e15 0%,#0f0e15 100%);
   overflow: hidden;
 }
 
 .star {
   position: absolute;
-  width: 1px;
-  height: 1px;
-
+  width: 2px;
+  height: 2px;
   @for $i from 1 through 250 {
     $light: random(255);
     &:nth-child(#{$i}) {
@@ -87,7 +59,7 @@ main {
 
 .shooting {
   position: absolute;
-  width: 50px;
+  width: 100px;
   height: 3px;
   background: linear-gradient(90deg, rgba(#fff, 1), rgba(#fff, 0));
   background: linear-gradient(
