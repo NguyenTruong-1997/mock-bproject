@@ -46,7 +46,6 @@ export class ProfileArticleComponent implements OnInit {
   }
   handlePage(e: any) {
     this.offset = e.pageIndex * e.pageSize;
-    console.log(e.pageIndex);
 
     this.pageIndex = e.pageIndex;
     this.limit = e.pageSize;
@@ -67,8 +66,8 @@ export class ProfileArticleComponent implements OnInit {
           this.listArticle[index].favorited = favorite.article.favorited;
           this.listArticle[index].favoritesCount = favorite.article.favoritesCount;
           this.blogService.succesSwal('success', `Favorited ${this.listArticle[index].author.username} successfully!`)
-
-        })
+        }
+        ,(err) => this.blogService.handerError(err))
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
@@ -87,7 +86,7 @@ export class ProfileArticleComponent implements OnInit {
           this.listArticle[index].favorited = favorite.article.favorited;
           this.listArticle[index].favoritesCount = favorite.article.favoritesCount;
           this.blogService.succesSwal('success', `Unfavorited ${this.listArticle[index].author.username} successfully!`)
-        })
+        },(err) => this.blogService.handerError(err))
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
