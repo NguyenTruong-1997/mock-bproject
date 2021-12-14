@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   user!: any;
   username?: string;
   param?: any;
-  follow!: boolean ;
+  follow!: boolean;
   isLoading: boolean = false;
   //#end region
 
@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private blogService: BlogService,
     private router: Router
-  ) {}
+  ) { }
 
   //#end region
 
@@ -46,77 +46,48 @@ export class ProfileComponent implements OnInit {
       this.username = user?.user.username;
     });
 
-
-
-    this.route.params.pipe(mergeMap((params): any =>{
+    this.route.params.pipe(mergeMap((params): any => {
       this.profileService.currentArticles.next(params.username);
       return this.userService.onGetProfile(params.username)
     })
-    ).subscribe((user : any) => {
-        this.user = user;
-        this.follow = user.profile.following;
-        this.isLoading = false;
-      },
+    ).subscribe((user: any) => {
+      this.user = user;
+      this.follow = user.profile.following;
+      this.isLoading = false;
+    },
       error => {
-        console.log(error);
+        this.blogService.handerError(error);
         this.isLoading = false;
+        this.router.navigate(['page-not-found']);
 
       })
-
-
   }
   links = [
     { url: `./`, label: 'My Articles' },
     { url: `./favorites`, label: 'Favorited Articles' },
   ];
 
-  onFollowUser(){
-    if(this.blogService.isLogin()){
-       this.userService.onFollowUser(this.user.profile.username).subscribe(follow =>
-      this.follow = follow.profile.following);
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: `Follow ${this.user.profile.username} successfully!`,
-        showConfirmButton: false,
-        width: '20rem',
-        timer: 1500
-      })
+  onFollowUser() {
+    if (this.blogService.isLogin()) {
+      this.userService.onFollowUser(this.user.profile.username).subscribe(follow =>
+        this.follow = follow.profile.following);
+      this.blogService.succesSwal('success', `Follow ${this.user.profile.username} successfully!`)
     }
-    else{
-      Swal.fire({
-        title: 'You need to login to perform this task ?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#0f0e15',
-        cancelButtonColor: '#ff7b7b',
-        iconColor: '#0f0e15',
-        confirmButtonText: 'Login'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigateByUrl('auth/login')
-        }
-      })
+    else {
+      this.blogService.questionSwal('You need to login to perform this task ?')
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigateByUrl('auth/login')
+          }
+        })
     }
   }
-  onUnfollowUser(){
+  onUnfollowUser() {
 
     this.userService.onUnfollowUser(this.user.profile.username).subscribe(unfollow =>
       this.follow = unfollow.profile.following);
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Your work has been saved',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Your work has been saved',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    }
+    this.blogService.succesSwal('success', `Unfollow ${this.user.profile.username} successfully!`)
+
+  }
 
 }
