@@ -12,7 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ConnectApiService } from 'src/app/shared/services/connect-api.service';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
 import { DebounceDirective } from './DebounceDirective/debounce.directive';
-import { SummaryPipe } from '../../shared/pipes/summary.pipe'
+import { SummaryPipe } from '../profile/pipe/summary.pipe'
 import { LoadingFullscreenModule } from 'src/app/shared/components/loading-fullscreen/loading-fullscreen.module';
 @NgModule({
   declarations: [

@@ -52,7 +52,7 @@ export class ProfileFavoritesComponent implements OnInit {
     ))
       .subscribe((data: any) => {
         this.listFavorites = data.articles
-      })
+      },(err) => this.blogService.handerError(err))
     window.scrollTo(0, 500);
   }
 
@@ -62,7 +62,7 @@ export class ProfileFavoritesComponent implements OnInit {
         this.listFavorites[index].favorited = favorite.article.favorited;
         this.listFavorites[index].favoritesCount = favorite.article.favoritesCount;
         this.blogService.succesSwal('success', `Favorited ${this.listFavorites[index].author.username} successfully!`)
-      })
+      },(err) => this.blogService.handerError(err))
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
@@ -80,7 +80,7 @@ export class ProfileFavoritesComponent implements OnInit {
         this.listFavorites[index].favorited = favorite.article.favorited;
         this.listFavorites[index].favoritesCount = favorite.article.favoritesCount;
         this.blogService.succesSwal('success', `Unfavorited ${this.listFavorites[index].author.username} successfully!`)
-      })
+      },(err) => this.blogService.handerError(err))
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')

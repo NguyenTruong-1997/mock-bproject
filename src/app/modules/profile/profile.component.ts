@@ -83,11 +83,10 @@ export class ProfileComponent implements OnInit {
     }
   }
   onUnfollowUser() {
-
-    this.userService.onUnfollowUser(this.user.profile.username).subscribe(unfollow =>
-      this.follow = unfollow.profile.following);
-    this.blogService.succesSwal('success', `Unfollow ${this.user.profile.username} successfully!`)
-
+    if (this.blogService.isLogin()) {
+      this.userService.onUnfollowUser(this.user.profile.username).subscribe(follow =>
+        this.follow = follow.profile.following);
+      this.blogService.succesSwal('success', `UnFollow ${this.user.profile.username} successfully!`)
+    }
   }
-
 }
