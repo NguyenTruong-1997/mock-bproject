@@ -1,10 +1,10 @@
-<div class="bg-black1 mx-auto" style="width: 100%; height: auto">
+<div class="mx-auto wrapper" style="width: 100%; height: auto">
   <div class="row">
     <div class="col-12">
       <div *ngIf="isLoading" class="text-center spinner mb-5">
-        <div style="width: 100%; height:220px"></div>
-        <app-loading-spinner></app-loading-spinner>
-        <div style="width: 100%; height:220px"></div>
+        <div style="width: 100%; height: 220px"></div>
+        <app-loading-fullscreen></app-loading-fullscreen>
+        <div style="width: 100%; height: 220px"></div>
       </div>
     </div>
   </div>
@@ -12,7 +12,7 @@
   <div class="post aminate" *ngIf="!isLoading">
     <div class="m-2">
       <div
-        class="post-content mx-auto border-content"
+        class="post-content mx-auto border-content box-shadow-red"
         style="width: 100%; height: auto"
       >
         <div class="float-start">
@@ -44,56 +44,61 @@
               class="post-tag"
               *ngIf="currentUser?.user?.username !== article?.author?.username"
             >
-              <a
-                ><span
-                  appDebounceClick
-                  [debounceTime]="300"
-                  class="text-gray"
-                  *ngIf="!article?.author?.following"
-                  (debounceClick)="followArticle()"
-                  ><i class="fas fa-plus"></i> Follow
-                  {{ article?.author?.username }}</span
-                ><span
-                  appDebounceClick
-                  [debounceTime]="300"
-                  class="text-gray"
-                  *ngIf="article?.author?.following"
-                  (debounceClick)="unfollowArticle()"
-                  ><i class="fas fa-plus"></i> Unfollow
-                  {{ article?.author?.username }}
-                </span></a
+              <button
+                [disabled]="disabledFollow"
+                appDebounceClick
+                class="text-gray"
+                *ngIf="!profile?.following"
+                (debounceClick)="followArticle()"
               >
-              <a
-                ><span
-                  appDebounceClick
-                  [debounceTime]="300"
-                  class="text-gray"
-                  *ngIf="!article?.favorited"
-                  (debounceClick)="favoriteArticle()"
-                  ><i class="far fa-heart"></i> Favorite Article
-                  {{ article?.favoritesCount }}</span
-                ><span
-                  appDebounceClick
-                  [debounceTime]="300"
-                  class="text-gray"
-                  *ngIf="article?.favorited"
-                  (debounceClick)="unFavoriteArticle()"
-                  ><i class="fas fa-heart"></i> Unfavorite Article
-                  {{ article?.favoritesCount }}</span
-                ></a
+                <i class="fas fa-user-plus"></i> Follow
+                {{ article?.author?.username }}
+              </button>
+              <button
+                [disabled]="disabledFollow"
+                appDebounceClick
+                class="text-gray"
+                *ngIf="profile?.following"
+                (debounceClick)="unfollowArticle()"
               >
+                <i class="fas fa-user-minus"></i> Unfollow
+                {{ article?.author?.username }}
+              </button>
+              <button
+                [disabled]="disabledFavorite"
+                appDebounceClick
+                [debounceTime]="300"
+                class="text-gray"
+                *ngIf="!article?.favorited"
+                (debounceClick)="favoriteArticle()"
+              >
+                <i class="far fa-heart"></i> Favorite Article
+                {{ article?.favoritesCount }}
+              </button>
+              <button
+                [disabled]="disabledFavorite"
+                appDebounceClick
+                [debounceTime]="300"
+                class="text-gray"
+                *ngIf="article?.favorited"
+                (debounceClick)="unFavoriteArticle()"
+              >
+                <i class="fas fa-heart"></i> Unfavorite Article
+                {{ article?.favoritesCount }}
+              </button>
             </span>
 
             <span
               class="post-tag"
               *ngIf="currentUser?.user?.username === article?.author?.username"
             >
-              <a (click)="updateArticle()"
-                ><i class="fas fa-edit"></i> Edit Article</a
-              >
-              <a (click)="deleteArticles()" class="text-danger"
-                ><i class="fas fa-trash-alt"></i> Delete Article</a
-              >
+              <button (click)="updateArticle()">
+                <i class="fas fa-edit"></i> Edit Article
+              </button>
+
+              <button (click)="deleteArticles()" class="text-danger">
+                <i class="fas fa-trash-alt"></i> Delete Article
+              </button>
             </span>
           </div>
         </div>
@@ -104,8 +109,10 @@
             <p>
               {{ article?.body }}
             </p>
-            <div class="post-tag d-flex" *ngFor="let tag of article?.tagList">
-              <a class="text-gray me-2">{{ tag }}</a>
+            <div class="d-flex" *ngIf="article?.tagList">
+              <div class="post-tag" *ngFor="let tag of article?.tagList">
+                <a class="text-gray me-2">{{ tag }}</a>
+              </div>
             </div>
           </div>
         </div>
@@ -137,7 +144,9 @@
                 class="comment-author-img"
               />
               <button
+                href="#"
                 (click)="input.value = ''"
+                [hidden]="!input.value"
                 type="submit"
                 class="float-end btn-none"
               >
@@ -151,7 +160,10 @@
           <app-loading-spinner></app-loading-spinner>
         </div>
         <div *ngIf="!isLoadingComment">
-          <div class="cmt-card mt-3" *ngFor="let comment of articleComment">
+          <div
+            class="cmt-card mt-3 box-shadow-red"
+            *ngFor="let comment of articleComment"
+          >
             <div class="card-footer">
               <div class="float-start">
                 <a
@@ -193,17 +205,10 @@
                 {{ comment.body }}
               </p>
             </div>
+            <div id="bottom"></div>
           </div>
         </div>
       </form>
-      <mat-paginator
-        class="mt-5 bg-paginator"
-        [length]="100"
-        [pageSize]="10"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page"
-      >
-      </mat-paginator>
     </div>
   </div>
 </div>
