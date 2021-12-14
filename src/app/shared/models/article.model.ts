@@ -39,6 +39,7 @@ export interface SingleComment {
 }
 
 export interface MultiComment {
+  article: Article;
   comments: Comment[];
 }
 
