@@ -25,9 +25,15 @@ export class ArticleFeedComponent implements OnInit {
 
   setListTo(type: string = '', filters?: '') {
     if (type === 'feed' && !this.blogService.isLogin()) {
-      this.router.navigateByUrl('auth/login');
-      return;
-    }
+      this.blogService.questionSwal("You need to login to perform this task ?").then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigateByUrl('auth/login')
+        }
+       
+    })
+  }
+  else{
     this.homeService.setTag({ type: type, filters: filters });
   }
+}
 }

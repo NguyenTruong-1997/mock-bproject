@@ -74,25 +74,19 @@ export class ProfileComponent implements OnInit {
     if(this.blogService.isLogin()){
        this.userService.onFollowUser(this.user.profile.username).subscribe(follow =>
       this.follow = follow.profile.following);
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: `Follow ${this.user.profile.username} successfully!`,
-        showConfirmButton: false,
-        width: '20rem',
-        timer: 1500
-      })
+      this.blogService.succesSwal('success',`Follow ${this.user.profile.username} successfully!`)
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: `Follow ${this.user.profile.username} successfully!`,
+      //   showConfirmButton: false,
+      //   width: '20rem',
+      //   timer: 1500
+      // })
     }
     else{
-      Swal.fire({
-        title: 'You need to login to perform this task ?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#0f0e15',
-        cancelButtonColor: '#ff7b7b',
-        iconColor: '#0f0e15',
-        confirmButtonText: 'Login'
-      }).then((result) => {
+      this.blogService.questionSwal('You need to login to perform this task ?')
+     .then((result) => {
         if (result.isConfirmed) {
           this.router.navigateByUrl('auth/login')
         }

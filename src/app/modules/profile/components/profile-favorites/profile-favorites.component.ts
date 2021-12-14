@@ -15,13 +15,14 @@ export class ProfileFavoritesComponent implements OnInit {
     private profileService: ProfileService,
     private ConnectApiService: ConnectApiService
   ) {}
-  listFavorites: any;
+  listFavorites!: any[];
   favorited!: boolean;
   favoritedCount:any = [];
   isLoadingFavorites: boolean = false;
   length!: number;
   offset: number = 0;
-  limit: number=5
+  limit: number=5;
+  newFeed: any;
 
   ngOnInit(): void {
     this.isLoadingFavorites = true;
@@ -29,7 +30,9 @@ export class ProfileFavoritesComponent implements OnInit {
       this.ConnectApiService.onGetMultiArticlesByFavorited(this.limit ,this.offset,articles)
     ))
     .subscribe((data) => {
-      this.listFavorites = data.articles;
+
+      [this.newFeed, ...this.listFavorites] = data.articles
+      console.log(this.newFeed, this.listFavorites);
       this.length = data.articlesCount;
       this.isLoadingFavorites =false;
     }, error => {
@@ -46,15 +49,25 @@ export class ProfileFavoritesComponent implements OnInit {
       this.ConnectApiService.onGetMultiArticlesByFavorited(this.limit ,this.offset,articles)
     ))
     .subscribe((data : any) => {
-      this.listFavorites = data.articles;
+      [this.newFeed, ...this.listFavorites] = data.articles
      })
      window.scrollTo(0, 500);
   }
 
   onFavoriteArticle(slug: string, index: number){
     return this.ConnectApiService.onFavoriteArticle(slug).subscribe((favorite) => {
-      this.listFavorites[index].favorited = favorite.article.favorited;
-      this.listFavorites[index].favoritesCount = favorite.article.favoritesCount;
+      this.listFavorites[index ].favorited = favorite.article.favorited;
+      this.listFavorites[index ].favoritesCount = favorite.article.favoritesCount;
+      // this.newFeed.favorited =favorite.article.favorited;
+      // this.newFeed.favoritesCount =favorite.article.favoritesCount;
+    })
+  }
+  onFavoritenew(slug: string){
+    return this.ConnectApiService.onFavoriteArticle(slug).subscribe((favorite) => {
+      // this.listFavorites[index ].favorited = favorite.article.favorited;
+      // this.listFavorites[index ].favoritesCount = favorite.article.favoritesCount;
+      this.newFeed.favorited =favorite.article.favorited;
+      this.newFeed.favoritesCount =favorite.article.favoritesCount;
     })
   }
 
@@ -63,5 +76,13 @@ export class ProfileFavoritesComponent implements OnInit {
       this.listFavorites[index].favorited = favorite.article.favorited;
       this.listFavorites[index].favoritesCount = favorite.article.favoritesCount;
      })
+
+}
+onUnfavoritenew(slug: string){
+  return this.ConnectApiService.onUnfavoriteArticle(slug).subscribe((favorite) => {
+    this.newFeed.favorited =favorite.article.favorited;
+    this.newFeed.favoritesCount =favorite.article.favoritesCount;
+   })
+
 }
 }

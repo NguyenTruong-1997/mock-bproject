@@ -34,3 +34,16 @@ body {
     transparent
   );
 }
+
+::selection {
+  background:#ff7b7b; 
+  color: #fff;
+}
+::-moz-selection {
+  background:#ff7b7b; 
+  color:#fff;
+}
+::-webkit-selection {
+  background:#ff7b7b; 
+  color:#fff;
+}

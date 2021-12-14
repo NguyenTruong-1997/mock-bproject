@@ -20,7 +20,8 @@ export class ProfileArticleComponent implements OnInit {
   isLoadingArticle: boolean = false;
   length!: number;
   offset: number = 0;
-  limit: number=5
+  limit: number=5;
+  newFeed: any;
   constructor(
     private profileService: ProfileService,
     private connectedService: ConnectApiService,
@@ -29,20 +30,17 @@ export class ProfileArticleComponent implements OnInit {
   ngOnInit(): void {
     this.isLoadingArticle = true;
 
-    const subscription = this.profileService.currentArticles.pipe(switchMap(articles =>
-      this.connectedService.onGetMultiArticlesByAuthor(this.limit ,this.offset,articles)
+    this.profileService.currentArticles.pipe(switchMap(articles =>
+      this.connectedService.onGetMultiArticlesByAuthor(this.limit ,this.offset, articles)
     ))
     .subscribe((data : any) => {
-      this.listArticle = data.articles;
-      console.log(data);
-
+      [this.newFeed, ...this.listArticle] = data.articles;
       this.length = data.articlesCount;
       this.isLoadingArticle = false;
-      subscription.unsubscribe();
+
     }, error => {
       console.log(error);
       this.isLoadingArticle = false;
-
     })
   }
 
@@ -53,7 +51,7 @@ export class ProfileArticleComponent implements OnInit {
       this.connectedService.onGetMultiArticlesByAuthor(this.limit ,this.offset,articles)
     ))
     .subscribe((data : any) => {
-      this.listArticle = data.articles;
+      [this.newFeed, ...this.listArticle] = data.articles
      })
   }
 
@@ -65,13 +63,28 @@ export class ProfileArticleComponent implements OnInit {
     })
   }
 
+  onFavoritenew(slug: string){
+    return this.connectedService.onFavoriteArticle(slug)
+    .subscribe((favorite) => {
+      this.newFeed.favorited = favorite.article.favorited;
+      this.newFeed.favoritesCount = favorite.article.favoritesCount;
+    })
+  }
   onUnfavoriteArticle(slug: string, index: number){
-    return this.connectedService.onUnfavoriteArticle(slug) .pipe(debounceTime(300))
+    return this.connectedService.onUnfavoriteArticle(slug)
     .subscribe((favorite) => {
       this.listArticle[index].favorited = favorite.article.favorited;
       this.listArticle[index].favoritesCount = favorite.article.favoritesCount;
      })
 
    }
+
+   onUnFavoritenew(slug: string){
+    return this.connectedService.onUnfavoriteArticle(slug)
+    .subscribe((favorite) => {
+      this.newFeed.favorited = favorite.article.favorited;
+      this.newFeed.favoritesCount = favorite.article.favoritesCount;
+    })
+  }
   }
 

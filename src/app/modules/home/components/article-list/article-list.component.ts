@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { HomeService } from '../../service/home.service';
   styleUrls: ['./article-list.component.scss'],
 })
 
-export class ArticleListComponent implements OnInit {
+export class ArticleListComponent implements OnInit,OnDestroy {
 
   @ViewChild('paginator') paginator!: MatPaginator;
 
@@ -25,6 +25,7 @@ export class ArticleListComponent implements OnInit {
   length: number = 0;
   listConfig:any = {};
   checkOffset:boolean = false;
+  articleNewFeed : string = '';
 
   constructor(
     private connectApiService: ConnectApiService,
@@ -70,6 +71,9 @@ export class ArticleListComponent implements OnInit {
         this.loading = false;
         this.results = res!.articles;
         this.length = res.articlesCount;
+        if(this.listConfig.type === 'all') {
+          this.articleNewFeed = this.results[0].slug
+        }
       },  (err) => {
         this.loading = false;
         this.blogService.handerError(err)
@@ -86,7 +90,7 @@ export class ArticleListComponent implements OnInit {
             this.results[i].favorited = res.article.favorited;
           });
         console.log('del');
-        this.blogService.succesSwal("Success","UnFavorited!")
+        this.blogService.succesSwal("Success",`Unfavorited ${this.results[i].author.username} successfully!`)
       } else {
         this.connectApiService
           .onFavoriteArticle(article.slug)
@@ -95,17 +99,18 @@ export class ArticleListComponent implements OnInit {
             this.results[i].favorited = res.article.favorited;
           });
         console.log('post');
-        this.blogService.succesSwal("Success","Favorited!")
+        this.blogService.succesSwal("Success",`Favorited ${this.results[i].author.username} successfully!`)
       }
     }
     else {
-     this.blogService.questionSwal("Ban can dang nhap").then((result) => {
+     this.blogService.questionSwal("You need to login to perform this task ?").then((result) => {
         if (result.isConfirmed) {
           this.router.navigateByUrl('auth/login')
         }
       })
     }
   }
+  
   handlePage(e: any) {
     if(this.listConfig.type === 'all') {
       this.offset = e.pageSize * e.pageIndex;
@@ -144,6 +149,15 @@ export class ArticleListComponent implements OnInit {
           this.blogService.handerError(err)
         });
       }
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 700);
+  }
+
+  setListTag(type: string = '', filters: any) {
+    this.homeService.setTag({ type: type, filters: filters });
+    scrollTo(0,700)
+  }
+
+  ngOnDestroy() {
+    this.listConfig.type = 'all';
   }
 }

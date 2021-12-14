@@ -22,9 +22,9 @@ export class TagListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.homeService.tag.subscribe((res) => {
-      this.listConfig = res;
-    });
+    // this.homeService.tag.subscribe((res) => {
+    //   this.listConfig = res;
+    // });
 
     this.connectApiService.onGetTags().subscribe(res => {
       this.tags = res.tags;
@@ -34,5 +34,6 @@ export class TagListComponent implements OnInit {
 
   setListTo(type: string = '', filters: any) {
     this.homeService.setTag({ type: type, filters: filters });
+    scrollTo(0,700)
   }
 }

@@ -2,13 +2,56 @@
   min-height: 600px;
 }
 
-.nav-link {
-  cursor: pointer;
-}
-
+.nav-link,
 .tag-pill {
   cursor: pointer;
 }
 
-.footer_ {
+.banner {
+  height: 90vh;
+  margin-bottom: 4.8rem;
+  position: relative;
+}
+
+.banner h3 {
+  position: absolute;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.banner img {
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  border-radius: 16px;
+}
+
+.heading {
+  position: absolute;
+  color: white;
+  font-size: 60px;
+  font-weight: bold;
+  letter-spacing: 6px;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  text-shadow: 3px 5px #ce6565;
+}
+
+.taglist {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -3%;
+    width: 100%;
 }

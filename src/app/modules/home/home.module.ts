@@ -11,6 +11,8 @@ import { DebounceClickDirective } from '../../shared/directives/debounce.directi
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
 import { LoadingFullscreenModule} from '../../shared/components/loading-fullscreen/loading-fullscreen.module'
+import { SummaryPipe } from './pipe/summary.pipe';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -18,6 +20,7 @@ import { LoadingFullscreenModule} from '../../shared/components/loading-fullscre
     TagListComponent,
     ArticleFeedComponent,
     DebounceClickDirective,
+    SummaryPipe
   ],
   imports: [
     CommonModule,
