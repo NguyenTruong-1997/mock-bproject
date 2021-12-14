@@ -3,6 +3,10 @@
 html,
 body {
   height: 100%;
+
+}
+html:focus-within {
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
