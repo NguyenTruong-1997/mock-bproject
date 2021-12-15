@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Profile } from 'src/app/shared/models/profile.model';
@@ -10,20 +10,22 @@ import { mergeMap, switchMap } from 'rxjs/operators';
 import { GetProfile } from '../../shared/models/profile.model';
 import Swal from 'sweetalert2';
 import { BlogService } from 'src/app/shared/services/blog.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   //#region Properties
-  userProfile!: any;
-  user!: any;
-  username?: string;
-  param?: any;
-  follow!: boolean;
-  isLoading: boolean = false;
+  public userProfile!: any;
+  public user!: any;
+  public username?: string;
+  public param?: any;
+  public follow!: boolean;
+  public isLoading: boolean = false;
+  public subscriptions = new Subscription();
   //#end region
 
   //#region Constructor
@@ -69,9 +71,10 @@ export class ProfileComponent implements OnInit {
 
   onFollowUser() {
     if (this.blogService.isLogin()) {
-      this.userService.onFollowUser(this.user.profile.username).subscribe(follow =>
+      const follow = this.userService.onFollowUser(this.user.profile.username).subscribe(follow =>
         this.follow = follow.profile.following);
       this.blogService.succesSwal('success', `Follow ${this.user.profile.username} successfully!`)
+      this.subscriptions.add(follow);
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
@@ -84,9 +87,16 @@ export class ProfileComponent implements OnInit {
   }
   onUnfollowUser() {
     if (this.blogService.isLogin()) {
-      this.userService.onUnfollowUser(this.user.profile.username).subscribe(follow =>
+      const unfollow = this.userService.onUnfollowUser(this.user.profile.username).subscribe(follow =>
         this.follow = follow.profile.following);
       this.blogService.succesSwal('success', `UnFollow ${this.user.profile.username} successfully!`)
+      this.subscriptions.add(unfollow);
+    }
+  }
+
+  public ngOnDestroy(): void {
+    if (this.subscriptions && !this.subscriptions.closed) {
+      this.subscriptions.unsubscribe();
     }
   }
 }
