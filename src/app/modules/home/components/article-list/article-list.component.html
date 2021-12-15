@@ -9,7 +9,7 @@
       <div
         class="article col col-4 col-d-6 col-t-12"
         *ngFor="let article of results; let i = index"
-        [ngClass]="{ custom_newfeed: i === 0 }"
+        [ngClass]="{ custom_newfeed: article.slug === articleNewFeed }"
       >
         <div class="article-card" [title]="article.description">
           <a class="article-img" [routerLink]="['/article', article.slug]">
