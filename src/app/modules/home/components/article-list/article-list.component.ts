@@ -161,5 +161,6 @@ export class ArticleListComponent implements OnInit,OnDestroy {
 
   ngOnDestroy() {
     this.listConfig.type = 'all';
+    this.listConfig.filters = '';
   }
 }
