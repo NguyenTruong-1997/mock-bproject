@@ -1,4 +1,4 @@
-<div class="mx-auto wrapper" style="width: 100%; height: auto">
+<div class="mx-auto wrapper" style="width: 97%; height: auto">
   <div class="row">
     <div class="col-12">
       <div *ngIf="isLoading" class="text-center spinner mb-5">
@@ -17,7 +17,7 @@
       >
         <div class="float-start">
           <div class="post-author d-flex">
-            <a href="#">
+            <a routerLink="/profile/{{ article?.author?.username }}">
               <img
                 class="post-author-img"
                 src="{{ article?.author?.image }}"
@@ -109,8 +109,8 @@
             <p>
               {{ article?.body }}
             </p>
-            <div class="d-flex" *ngIf="article?.tagList">
-              <div class="post-tag" *ngFor="let tag of article?.tagList">
+            <div class="d-flex flex-wrap" *ngIf="article?.tagList">
+              <div class="post-tag mt-3" *ngFor="let tag of article?.tagList">
                 <a class="text-gray me-2">{{ tag }}</a>
               </div>
             </div>
@@ -144,7 +144,6 @@
                 class="comment-author-img"
               />
               <button
-                href="#"
                 (click)="input.value = ''"
                 [hidden]="!input.value"
                 type="submit"
@@ -164,8 +163,8 @@
             class="cmt-card mt-3 box-shadow-red"
             *ngFor="let comment of articleComment"
           >
-            <div class="card-footer">
-              <div class="float-start">
+            <div class="card-footer d-flex">
+              <div class="w-100">
                 <a
                   routerLink="/profile/{{ article?.author?.username }}"
                   class="comment-author"
@@ -187,7 +186,6 @@
                 }}</span>
               </div>
               <div
-                class="float-end"
                 *ngIf="
                   currentUser?.user?.username === comment?.author?.username
                 "
