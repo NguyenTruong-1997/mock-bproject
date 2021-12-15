@@ -26,7 +26,7 @@
               {{article.description | summary: 50}}
             </p>
             <span class="post-tag">
-              <a *ngFor="let tag of article.tagList">
+              <a *ngFor="let tag of article.tagList  | spliceTag: 5">
                 {{ tag }}</a>
             </span>
             <div class="article-bottom d-flex justify-content-between align-items-end">

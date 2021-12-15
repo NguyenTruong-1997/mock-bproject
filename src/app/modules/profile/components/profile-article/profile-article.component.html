@@ -28,10 +28,10 @@
             </p>
             <div class="tag-bottom">
               <span class="post-tag">
-                <a *ngFor="let tag of article.tagList">
+                <a *ngFor="let tag of article.tagList | spliceTag: 5">
                   {{ tag }} </a>
               </span>
-              <div class="article-bottom">
+              <div class="article-bottom ">
                 <div class="article-author">
                   <a><img class="img-author" src="{{ article.author.image }}" alt="" /></a>
                   <a class="article-bottom-user">{{article.author.username}}</a>
