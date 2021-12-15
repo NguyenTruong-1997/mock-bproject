@@ -10,7 +10,7 @@
         <div class="col col-8 col-d-10 col-m-12 push-m-0 push-d-1 push-2">
           <div class="inf-profile">
             <figure class="inf-image-box">
-              <img class="inf-image" src="{{ user?.profile.image }}" />
+              <img class="inf-image" [src]="user?.profile.image ? user?.profile.image : 'https://api.realworld.io/images/smiley-cyrus.jpeg'" />
             </figure>
             <h1 class="inf-title">{{ user?.profile.username }}</h1>
             <h2 class="bio-profile">
