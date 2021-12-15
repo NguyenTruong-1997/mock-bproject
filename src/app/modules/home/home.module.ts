@@ -7,9 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArticleListComponent } from './components/article-list/article-list.component';
 import { TagListComponent } from './components/tag-list/tag-list.component';
 import { ArticleFeedComponent } from './components/article-feed/article-feed.component';
-import { DebounceClickDirective } from '../../shared/directives/debounce.directive';
+import { DebounceClickDirective } from '../home/directives/debounce.directive';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
+import { LoadingFullscreenModule} from '../../shared/components/loading-fullscreen/loading-fullscreen.module'
+import { SummaryPipe } from './pipe/summary.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/
     TagListComponent,
     ArticleFeedComponent,
     DebounceClickDirective,
+    SummaryPipe
   ],
   imports: [
     CommonModule,
@@ -25,6 +28,7 @@ import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/
     ReactiveFormsModule,
     MatPaginatorModule,
     LoadingSpinnerModule,
+    LoadingFullscreenModule,
     RouterModule.forChild([{ path: '', component: HomeComponent }]),
   ],
   providers: [HomeService],

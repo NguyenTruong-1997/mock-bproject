@@ -3,6 +3,10 @@
 html,
 body {
   height: 100%;
+
+}
+html:focus-within {
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
@@ -33,4 +37,17 @@ body {
     transparent 75%,
     transparent
   );
+}
+
+::selection {
+  background:#ff7b7b; 
+  color: #fff;
+}
+::-moz-selection {
+  background:#ff7b7b; 
+  color:#fff;
+}
+::-webkit-selection {
+  background:#ff7b7b; 
+  color:#fff;
 }

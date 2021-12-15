@@ -1,0 +1,140 @@
+
+.widget {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.widget__title {
+    opacity: 0.5;
+    display: inline-block;
+    position: relative;
+    padding-left: 8px;
+    margin-bottom: 36px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.tag__cloud {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 5%;
+}
+
+.tag__cloud a:hover {
+    border-color: #ff7b7b;
+    color: #fff;
+    cursor: pointer;
+}
+
+.tag__cloud a {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 0 5px 5px 0;
+    font-size: 14px;
+    line-height: 10px;
+    font-weight: 500;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    color: #aaa;
+    text-decoration: none;
+}
+
+.widget__title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: -1;
+    transform: translateY(-50%);
+    display: block;
+    width: 106px;
+    height: 38px;
+    border-radius: 4px 0px 0px 4px;
+    background: linear-gradient(
+90deg, #ff7b7b -5.19%, rgba(15,14,21,0) 100%);
+}
+
+.widget__head {
+    margin-left: 3%;
+    width: 40%;
+}
+
+// .subscribe-group-top {
+//     width: 50%;
+// }
+
+// .screen-reader-text {
+//     clip: rect(1px, 1px, 1px, 1px);
+//     height: 1px;
+//     overflow: hidden;
+//     position: absolute !important;
+//     width: 1px;
+//     word-wrap: normal !important;
+// }
+
+// .subscribe-group-top .subscribe-email {
+//     position: relative;
+//     width: 100%;
+//     height: 56px;
+//     padding: 20px;
+//     font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",sans-serif;
+//     font-size: 14px;
+//     line-height: 20px;
+//     font-weight: 700;
+//     border-radius: 8px;
+//     color: #fff;
+//     background-color: #17151E;
+//     border: 2px solid transparent;
+//     outline: 0;
+//     -webkit-appearance: none;
+//     box-sizing: border-box;
+//     transition: border-color .2s ease-in-out;
+//     cursor: text;
+// }
+
+// .subscribe-group-top .subscribe-button {
+//     margin-left: 10px;
+// }
+
+// .button {
+//     display: inline-block;
+//     white-space: nowrap;
+//     vertical-align: middle;
+//     font: inherit;
+//     border: none;
+//     border-radius: 8px;
+//     outline: none;
+//     -webkit-appearance: none;
+//     text-align: center;
+//     text-decoration: none;
+//     color: #fff;
+//     transition: all 0.2s ease;
+//     cursor: pointer;
+// }
+
+// .subscribe-group-top .subscribe-email:focus {
+//     color: #fff;
+//     border-color: #ff7b7b;
+// }
+
+// .button--primary:hover {
+//     color: #09080f;
+//     background-color: #ff6262;
+// }
+
+
+// .subscribe-group-top .subscribe-button {
+//     margin-left: 10px;
+// }
+// .button--primary {
+//     padding: 20px 40px;
+//     font-size: 16px;
+//     font-weight: 700;
+//     line-height: 1;
+//     background-color: #17151E;
+// }

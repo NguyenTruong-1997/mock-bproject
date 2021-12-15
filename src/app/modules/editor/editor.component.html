@@ -6,29 +6,18 @@
           <app-loading-fullscreen></app-loading-fullscreen>
         </div>
 
-        <form
-          autocomplete="off"
-          class="article-form"
-          novalidate
-          [formGroup]="submitForm"
-          (submit)="submitForm.valid && onSubmit(submitForm)"
-        >
+        <form autocomplete="off" class="article-form" novalidate [formGroup]="submitForm"
+          (submit)="submitForm.valid && onSubmit(submitForm)">
 
           <div class="article-editor__logo text-center">
-            <img src="https://img.icons8.com/ios/100/000000/circled-w.png"/>
+            <img src="https://img.icons8.com/ios/100/000000/circled-w.png" />
           </div>
 
           <h2 class="article__title text-center">What do you think, let share it for everyone!</h2>
 
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Article Title</mat-label>
-            <input
-              type="text"
-              matInput
-              placeholder="Title"
-              formControlName="title"
-              #inpFocus
-            />
+            <input type="text" matInput placeholder="Title" formControlName="title" #inpFocus />
             <mat-error *ngIf="handle.title.errors?.required">
               Article title is <strong>required</strong>
             </mat-error>
@@ -36,12 +25,7 @@
 
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>What's this article about?</mat-label>
-            <input
-              type="text"
-              matInput
-              placeholder="Description"
-              formControlName="description"
-            />
+            <input type="text" matInput placeholder="Description" formControlName="description" />
             <mat-error *ngIf="handle.description.errors?.required">
               Description is <strong>required</strong>
             </mat-error>
@@ -49,25 +33,19 @@
 
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Tags something!?</mat-label>
-            <input
-              type="text"
-              matInput
-              placeholder="Tags"
-              formControlName="tagList"
-            />
+            <input type="text" matInput placeholder="Tags" formControlName="tagList" />
             <mat-error *ngIf="handle.tagList.errors?.required">
               Tag is <strong>required</strong>
             </mat-error>
           </mat-form-field>
 
+          <div class="post-tag d-flex mb-2" *ngIf="listTags">
+            <a class="text-gray me-2" *ngFor="let tag of listTags">{{ tag }}</a>
+          </div>
+
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>What do you want to share!?</mat-label>
-            <textarea
-              matInput
-              placeholder="What do you think!?"
-              formControlName="body"
-              rows="5"
-            ></textarea>
+            <textarea matInput placeholder="What do you think!?" formControlName="body" rows="5"></textarea>
             <mat-error *ngIf="handle.body.errors?.required">
               This field is <strong>required</strong>
             </mat-error>
