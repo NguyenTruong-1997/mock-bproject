@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 export class ProfileFavoritesComponent implements OnInit, OnDestroy {
 
   public subscriptions = new Subscription();
-  public listFavorites!: any[];
+  public listFavorites!: any[] ;
   public favorited!: boolean;
   public favoritedCount: any = [];
   public isLoadingFavorites: boolean = false;

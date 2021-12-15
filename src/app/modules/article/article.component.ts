@@ -103,6 +103,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   public deleteComment(id: any) {
+    
+    this.blogService.questionSwal("Are you sure?\nYou won't be able to revert this!").then((result) => {
+      if (result.isConfirmed) {
+
     const index = this.articleComment.findIndex((comment) => comment.id === id);
     const deleteSub = this.getAPI.onDeleteComment(this.article.slug, id).subscribe(
       () => {
@@ -113,8 +117,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     );
-
     this.subscriptions.add(deleteSub);
+      }
+    })
   }
   //#end region
   public favoriteArticle() {

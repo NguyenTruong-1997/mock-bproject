@@ -93,12 +93,14 @@
     </div>
   </div>
 </div>
-
+<div class="no-content" *ngIf="length <= 0">
+  <p>No content...</p>
+</div>
 <mat-paginator
   [hidden]="!results.length"
   #paginator
   [length]="length"
-  [pageSizeOptions]="[5, 10, 100]"
+  [pageSizeOptions]="[5, 10, 20]"
   aria-label="Select page"
   (page)="handlePage($event)"
 >

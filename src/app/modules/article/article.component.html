@@ -45,7 +45,6 @@
               *ngIf="currentUser?.user?.username !== article?.author?.username"
             >
               <button
-                [disabled]="disabledFollow"
                 appDebounceClick
                 class="text-gray"
                 *ngIf="!profile?.following"
@@ -55,7 +54,6 @@
                 {{ article?.author?.username }}
               </button>
               <button
-                [disabled]="disabledFollow"
                 appDebounceClick
                 class="text-gray"
                 *ngIf="profile?.following"
@@ -65,7 +63,6 @@
                 {{ article?.author?.username }}
               </button>
               <button
-                [disabled]="disabledFavorite"
                 appDebounceClick
                 [debounceTime]="300"
                 class="text-gray"
@@ -76,7 +73,6 @@
                 {{ article?.favoritesCount }}
               </button>
               <button
-                [disabled]="disabledFavorite"
                 appDebounceClick
                 [debounceTime]="300"
                 class="text-gray"
@@ -96,7 +92,11 @@
                 <i class="fas fa-edit"></i> Edit Article
               </button>
 
-              <button (click)="deleteArticles()" class="text-danger">
+              <button 
+                appDebounceClick
+                [debounceTime]="300" 
+                (debounceClick)="deleteArticles()" 
+                class="text-danger">
                 <i class="fas fa-trash-alt"></i> Delete Article
               </button>
             </span>
@@ -191,7 +191,9 @@
                 "
               >
                 <span
-                  (click)="deleteComment(comment?.id)"
+                  appDebounceClick
+                  [debounceTime]="300" 
+                  (debounceClick)="deleteComment(comment?.id)"
                   class="pull-right icon-trash"
                   style="cursor: pointer"
                   ><i class="fas fa-trash"></i

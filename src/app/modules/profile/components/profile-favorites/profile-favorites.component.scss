@@ -70,7 +70,7 @@
   font-weight: 500;
 }
 .article-title {
-  margin: 12px 0 35px;
+  margin: 12px 0 20px;
   font-size: 30px;
   font-weight: 500;
   line-height: 1;
@@ -170,6 +170,13 @@
   font-size: 16px !important;
 }
 
+.no-content {
+  height: 30vh;
+  color: white;
+  text-align: center;
+  opacity: 0.5;
+}
+
 @media (max-width: 1200px) {
 
   .col-t-12 {
@@ -186,3 +193,4 @@
     display: none;
   }
 }
+

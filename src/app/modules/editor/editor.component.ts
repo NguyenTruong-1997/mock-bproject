@@ -156,7 +156,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, CanCom
   public onSubmit(form: FormGroup) {
     this.submitted = true;
     if (this.isEdit) {
-      console.log(form.value);
       this.blogService.questionSwal('Are you sure!?')
       .then((result) => {
         if (result.isConfirmed) {
