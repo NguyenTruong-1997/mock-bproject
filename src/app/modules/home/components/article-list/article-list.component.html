@@ -44,7 +44,7 @@
             <div class="article-bottom">
               <div class="tag-bottom">
                 <span class="post-tag">
-                  <a *ngFor="let tag of article.tagList" (click)="setListTag('', tag)"> {{ tag }} </a>
+                  <a *ngFor="let tag of article.tagList | spliceTag : 5" (click)="setListTag('', tag)"> {{ tag }} </a>
                 </span>
               </div>
               <div

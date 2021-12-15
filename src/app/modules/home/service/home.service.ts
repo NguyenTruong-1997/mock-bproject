@@ -10,8 +10,14 @@ export class HomeService {
   tag$ = new BehaviorSubject<{}>({type : 'all', filters: ''});
   tag = this.tag$.asObservable();
 
+  countArticle$ = new BehaviorSubject<number>(0);
+  countArticle = this.countArticle$.asObservable();
+
   setTag(value: any) {
     this.tag$.next(value);
+  }
+  setCountArticle(value: any) {
+    this.countArticle$.next(value);
   }
 
 
