@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { BlogService } from 'src/app/shared/services/blog.service';
 import { ConnectApiService } from 'src/app/shared/services/connect-api.service';
@@ -15,28 +16,30 @@ import { HomeService } from '../../service/home.service';
 })
 
 export class ArticleListComponent implements OnInit,OnDestroy {
+  //#region Properties
+  public subscriptions = new Subscription();
 
   @ViewChild('paginator') paginator!: MatPaginator;
 
-  results: Article[] = [];
-  loading: boolean = true;
-  offset: number = 0;
-  limit: number = 5;
-  length: number = 0;
-  listConfig:any = {};
-  checkOffset:boolean = false;
-  articleNewFeed : string = '';
-  pageIndex : number = 0;
+  public results: Article[] = [];
+  public loading: boolean = true;
+  public offset: number = 0;
+  public limit: number = 5;
+  public length: number = 0;
+  public listConfig:any = {};
+  public checkOffset:boolean = false;
+  public articleNewFeed : string = '';
+  public pageIndex : number = 0;
 
-  constructor(
+  public constructor(
     private connectApiService: ConnectApiService,
     private homeService: HomeService,
     private blogService : BlogService,
     private router : Router
   ) {}
 
-  ngOnInit(): void {
-    this.homeService.tag
+  public ngOnInit(): void {
+    const subArticle = this.homeService.tag
       .pipe(
         switchMap((name: any) => {
           if (name.type === 'all') {
@@ -78,26 +81,29 @@ export class ArticleListComponent implements OnInit,OnDestroy {
         this.loading = false;
         this.blogService.handerError(err)
       })
+      this.subscriptions.add(subArticle)
   }
 
-  tonggleFavorite(article: any, i: number) {
+  public tonggleFavorite(article: any, i: number) {
     if(this.blogService.isLogin()){
       if (article.favorited) {
-        this.connectApiService
+        const subUnFavorite = this.connectApiService
           .onUnfavoriteArticle(article.slug)
           .subscribe((res) => {
             this.results[i].favoritesCount = res.article.favoritesCount;
             this.results[i].favorited = res.article.favorited;
             this.blogService.succesSwal("Success",`Unfavorited ${this.results[i].author.username} successfully!`)
-          });
+          }, (err) => this.blogService.handerError(err));
+          this.subscriptions.add(subUnFavorite);
       } else {
-        this.connectApiService
+        const subFavorite = this.connectApiService
           .onFavoriteArticle(article.slug)
           .subscribe((res) => {
             this.results[i].favoritesCount = res.article.favoritesCount;
             this.results[i].favorited = res.article.favorited;
             this.blogService.succesSwal("Success",`Favorited ${this.results[i].author.username} successfully!`)
-          });
+          }, (err) => this.blogService.handerError(err));
+          this.subscriptions.add(subFavorite)
       }
     }
     else {
@@ -109,12 +115,12 @@ export class ArticleListComponent implements OnInit,OnDestroy {
     }
   }
   
-  handlePage(e: any) {
+  public handlePage(e: any) {
     this.pageIndex = e.pageIndex
     if(this.listConfig.type === 'all') {
       this.offset = e.pageSize * e.pageIndex;
       this.limit = e.pageSize;
-      this.connectApiService
+      const subPageAll = this.connectApiService
         .onGetGlobalFeedArticles(this.limit, this.offset)
         .subscribe((res: any) => {
           this.results = res.articles;
@@ -123,11 +129,12 @@ export class ArticleListComponent implements OnInit,OnDestroy {
           this.blogService.handerError(err)
         }
       );
+      this.subscriptions.add(subPageAll);
     }
     else if(this.listConfig.type === 'feed') {
       this.offset = e.pageSize * e.pageIndex;
       this.limit = e.pageSize;
-      this.connectApiService
+      const subPageFeed = this.connectApiService
         .onGetMyFeedArticles(this.limit, this.offset)
         .subscribe((res: any) => {
           this.results = res.articles;
@@ -135,11 +142,12 @@ export class ArticleListComponent implements OnInit,OnDestroy {
         (err) => {
           this.blogService.handerError(err)
         });
+      this.subscriptions.add(subPageFeed);
     }
     else if(this.listConfig.filters) {
       this.offset = e.pageSize * e.pageIndex;
       this.limit = e.pageSize;
-      this.connectApiService
+      const subPageTag = this.connectApiService
         .onGetMultiArticlesByTag(this.limit, this.offset, this.listConfig.filters)
         .subscribe((res: any) => {
           this.results = res.articles;
@@ -147,20 +155,22 @@ export class ArticleListComponent implements OnInit,OnDestroy {
         (err) => {
           this.blogService.handerError(err)
         });
+      this.subscriptions.add(subPageTag);
       }
       window.scrollTo(0, 700);
   }
 
-  setListTag(type: string = '', filters: any) {
+  public setListTag(type: string = '', filters: any) {
     this.homeService.setTag({ type: type, filters: filters });
     scrollTo(0,700)
   }
 
-  showImages(i: number) {
+  public showImages(i: number) {
     return ((this.pageIndex + 1) * i) % 10;
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
+    this.subscriptions.unsubscribe();
     this.listConfig.type = 'all';
     this.listConfig.filters = '';
   }
