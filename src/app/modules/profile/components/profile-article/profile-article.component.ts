@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
 import { BlogService } from 'src/app/shared/services/blog.service';
 import { ConnectApiService } from 'src/app/shared/services/connect-api.service';
@@ -10,7 +11,8 @@ import { ProfileService } from '../../service/profile.service';
   templateUrl: './profile-article.component.html',
   styleUrls: ['./profile-article.component.scss'],
 })
-export class ProfileArticleComponent implements OnInit {
+export class ProfileArticleComponent implements OnInit, OnDestroy {
+  public subscriptions = new Subscription();
   public param: any;
   public listArticle!: any;
   public Article!: boolean;
@@ -32,7 +34,7 @@ export class ProfileArticleComponent implements OnInit {
   ngOnInit(): void {
     this.isLoadingArticle = true;
 
-    this.profileService.currentArticles.pipe(switchMap(articles =>
+    const listArticles = this.profileService.currentArticles.pipe(switchMap(articles =>
       this.connectedService.onGetMultiArticlesByAuthor(this.limit, this.offset, articles)
     ))
       .subscribe((data: any) => {
@@ -44,13 +46,13 @@ export class ProfileArticleComponent implements OnInit {
         this.blogService.handerError(error);
         this.isLoadingArticle = false;
       })
+    this.subscriptions.add(listArticles);
   }
   handlePage(e: any) {
     this.offset = e.pageIndex * e.pageSize;
-
     this.pageIndex = e.pageIndex;
     this.limit = e.pageSize;
-    this.profileService.currentArticles.pipe(switchMap(articles =>
+    const page = this.profileService.currentArticles.pipe(switchMap(articles =>
       this.connectedService.onGetMultiArticlesByAuthor(this.limit, this.offset, articles)
     ))
       .subscribe((data: any) => {
@@ -58,17 +60,19 @@ export class ProfileArticleComponent implements OnInit {
 
       })
     window.scrollTo(0, 500);
+    this.subscriptions.add(page);
 
   }
   onFavoriteArticle(slug: string, index: number) {
     if (this.blogService.isLogin()) {
-      this.connectedService.onFavoriteArticle(slug)
+      const favorited = this.connectedService.onFavoriteArticle(slug)
         .subscribe((favorite) => {
           this.listArticle[index].favorited = favorite.article.favorited;
           this.listArticle[index].favoritesCount = favorite.article.favoritesCount;
           this.blogService.succesSwal('success', `Favorited ${this.listArticle[index].author.username} successfully!`)
         }
           , (err) => this.blogService.handerError(err))
+      this.subscriptions.add(favorited);
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
@@ -78,16 +82,18 @@ export class ProfileArticleComponent implements OnInit {
           }
         })
     }
+
   }
 
   onUnfavoriteArticle(slug: string, index: number) {
     if (this.blogService.isLogin()) {
-      this.connectedService.onUnfavoriteArticle(slug)
+      const unfavorited = this.connectedService.onUnfavoriteArticle(slug)
         .subscribe((favorite) => {
           this.listArticle[index].favorited = favorite.article.favorited;
           this.listArticle[index].favoritesCount = favorite.article.favoritesCount;
           this.blogService.succesSwal('success', `Unfavorited ${this.listArticle[index].author.username} successfully!`)
         }, (err) => this.blogService.handerError(err))
+      this.subscriptions.add(unfavorited);
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
@@ -98,7 +104,11 @@ export class ProfileArticleComponent implements OnInit {
         })
     }
   }
-
+  public ngOnDestroy(): void {
+    if (this.subscriptions && !this.subscriptions.closed) {
+      this.subscriptions.unsubscribe();
+    }
+  }
   showImages(i: number) {
     return ((this.pageIndex + 1) * i) % 10;
   }
