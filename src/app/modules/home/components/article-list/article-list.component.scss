@@ -179,6 +179,11 @@
     width: 100%;
   }
 }
+@media (max-width: 330px) {
+  .newFeed {
+    display: none;
+  }
+}
 
 .custom_newfeed {
   width: 100% !important;
