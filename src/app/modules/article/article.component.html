@@ -109,7 +109,7 @@
             <p>
               {{ article?.body }}
             </p>
-            <div class="d-flex" *ngIf="article?.tagList">
+            <div class="d-lg-inline-flex" *ngIf="article?.tagList">
               <div class="post-tag" *ngFor="let tag of article?.tagList">
                 <a class="text-gray me-2">{{ tag }}</a>
               </div>
