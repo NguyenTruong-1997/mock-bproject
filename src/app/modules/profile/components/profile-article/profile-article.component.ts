@@ -11,17 +11,18 @@ import { ProfileService } from '../../service/profile.service';
   styleUrls: ['./profile-article.component.scss'],
 })
 export class ProfileArticleComponent implements OnInit {
-  param: any;
-  listArticle!: any;
-  Article!: boolean;
-  favorited!: boolean;
-  favoritedCount: any
-  isLoadingArticle: boolean = false;
-  length!: number;
-  offset: number = 0;
-  limit: number = 5;
-  newFeed: any;
-  pageIndex: number = 1;
+  public param: any;
+  public listArticle!: any;
+  public Article!: boolean;
+  public favorited!: boolean;
+  public favoritedCount: any
+  public isLoadingArticle: boolean = false;
+  public length!: number;
+  public offset: number = 0;
+  public limit: number = 5;
+  public newFeed: any;
+  public pageIndex: number = 1;
+
   constructor(
     private profileService: ProfileService,
     private connectedService: ConnectApiService,
@@ -67,7 +68,7 @@ export class ProfileArticleComponent implements OnInit {
           this.listArticle[index].favoritesCount = favorite.article.favoritesCount;
           this.blogService.succesSwal('success', `Favorited ${this.listArticle[index].author.username} successfully!`)
         }
-        ,(err) => this.blogService.handerError(err))
+          , (err) => this.blogService.handerError(err))
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
@@ -86,7 +87,7 @@ export class ProfileArticleComponent implements OnInit {
           this.listArticle[index].favorited = favorite.article.favorited;
           this.listArticle[index].favoritesCount = favorite.article.favoritesCount;
           this.blogService.succesSwal('success', `Unfavorited ${this.listArticle[index].author.username} successfully!`)
-        },(err) => this.blogService.handerError(err))
+        }, (err) => this.blogService.handerError(err))
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')

@@ -18,12 +18,12 @@ import { BlogService } from 'src/app/shared/services/blog.service';
 })
 export class ProfileComponent implements OnInit {
   //#region Properties
-  userProfile!: any;
-  user!: any;
-  username?: string;
-  param?: any;
-  follow!: boolean;
-  isLoading: boolean = false;
+  public userProfile!: any;
+  public user!: any;
+  public username?: string;
+  public param?: any;
+  public follow!: boolean;
+  public isLoading: boolean = false;
   //#end region
 
   //#region Constructor

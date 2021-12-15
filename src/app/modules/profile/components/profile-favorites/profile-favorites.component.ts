@@ -11,6 +11,15 @@ import { BlogService } from 'src/app/shared/services/blog.service';
   styleUrls: ['./profile-favorites.component.scss'],
 })
 export class ProfileFavoritesComponent implements OnInit {
+  public listFavorites!: any[];
+  public favorited!: boolean;
+  public favoritedCount: any = [];
+  public isLoadingFavorites: boolean = false;
+  public length!: number;
+  public offset: number = 0;
+  public limit: number = 5;
+  public newFeed: any;
+  public pageIndex: number = 1;
 
   constructor(
     private profileService: ProfileService,
@@ -18,15 +27,7 @@ export class ProfileFavoritesComponent implements OnInit {
     private blogService: BlogService,
     private router: Router
   ) { }
-  listFavorites!: any[];
-  favorited!: boolean;
-  favoritedCount: any = [];
-  isLoadingFavorites: boolean = false;
-  length!: number;
-  offset: number = 0;
-  limit: number = 5;
-  newFeed: any;
-  pageIndex: number = 1;
+
 
   ngOnInit(): void {
     this.isLoadingFavorites = true;
@@ -52,7 +53,7 @@ export class ProfileFavoritesComponent implements OnInit {
     ))
       .subscribe((data: any) => {
         this.listFavorites = data.articles
-      },(err) => this.blogService.handerError(err))
+      }, (err) => this.blogService.handerError(err))
     window.scrollTo(0, 500);
   }
 
@@ -62,7 +63,7 @@ export class ProfileFavoritesComponent implements OnInit {
         this.listFavorites[index].favorited = favorite.article.favorited;
         this.listFavorites[index].favoritesCount = favorite.article.favoritesCount;
         this.blogService.succesSwal('success', `Favorited ${this.listFavorites[index].author.username} successfully!`)
-      },(err) => this.blogService.handerError(err))
+      }, (err) => this.blogService.handerError(err))
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
@@ -80,7 +81,7 @@ export class ProfileFavoritesComponent implements OnInit {
         this.listFavorites[index].favorited = favorite.article.favorited;
         this.listFavorites[index].favoritesCount = favorite.article.favoritesCount;
         this.blogService.succesSwal('success', `Unfavorited ${this.listFavorites[index].author.username} successfully!`)
-      },(err) => this.blogService.handerError(err))
+      }, (err) => this.blogService.handerError(err))
     }
     else {
       this.blogService.questionSwal('You need to login to perform this task ?')
