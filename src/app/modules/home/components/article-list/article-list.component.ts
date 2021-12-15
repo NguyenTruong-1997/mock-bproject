@@ -72,6 +72,7 @@ export class ArticleListComponent implements OnInit,OnDestroy {
         this.length = res.articlesCount;
         if(this.listConfig.type === 'all') {
           this.articleNewFeed = this.results[0].slug
+          this.homeService.setCountArticle(res.articlesCount)
         }
       },  (err) => {
         this.loading = false;

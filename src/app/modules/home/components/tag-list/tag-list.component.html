@@ -6,9 +6,9 @@
     <div class="tag__cloud">
       <a
         *ngFor="let tag of tags"
-        (click)="setListTo('', tag)"
+        (click)="setListTo('', tag.tag)"
       >
-        {{ tag }}
+        {{ tag.tag }}
       </a>
     </div>
   </div>
