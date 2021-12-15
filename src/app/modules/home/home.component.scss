@@ -55,3 +55,13 @@
     bottom: -3%;
     width: 100%;
 }
+
+@media (max-width: 450px) {
+  h3{
+    display: none;
+  }
+  .heading {
+    font-size: 50px;
+  }
+}
+

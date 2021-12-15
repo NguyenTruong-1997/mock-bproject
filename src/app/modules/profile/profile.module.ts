@@ -14,6 +14,7 @@ import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/
 import { DebounceDirective } from './DebounceDirective/debounce.directive';
 import { SummaryPipe } from '../profile/pipe/summary.pipe'
 import { LoadingFullscreenModule } from 'src/app/shared/components/loading-fullscreen/loading-fullscreen.module';
+import { SplicePipe } from './pipe/spliceTag.pipe';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -21,7 +22,7 @@ import { LoadingFullscreenModule } from 'src/app/shared/components/loading-fulls
     ProfileFavoritesComponent,
     DebounceDirective,
     SummaryPipe,
-
+    SplicePipe
   ],
   imports: [
     CommonModule,
